@@ -22,6 +22,10 @@ export default function StatsPage({ stats }) {
   const [averageDownloadTime, setAverageDownloadTime] = useState(0);
   const [averagePostRate, setAveragePostRate] = useState(0);
   const [averageDownloadRate, setAverageDownloadRate] = useState(0);
+  const [averagePostRateMB, setAveragePostRateMB] = useState(0);
+  const [averagePostRateMbits, setAveragePostRateMbits] = useState(0);
+  const [averageDownloadRateMB, setAverageDownloadRateMB] = useState(0);
+  const [averageDownloadRateMbits, setAverageDownloadRateMbits] = useState(0);
 
   useEffect(() => {
     if (stats.length > 0) {
@@ -38,6 +42,18 @@ export default function StatsPage({ stats }) {
       setAverageDownloadRate(
         stats.reduce((total, entry) => total + parseFloat(entry.Download_Rate_Files_per_Sec || 0), 0) / stats.length
       );
+      setAveragePostRateMB(
+        stats.reduce((total, entry) => total + parseFloat(entry.Post_Rate_MB_per_Sec || 0), 0) / stats.length
+      );
+      setAveragePostRateMbits(
+        stats.reduce((total, entry) => total + parseFloat(entry.Post_Rate_Mbits_per_Sec || 0), 0) / stats.length
+      );
+      setAverageDownloadRateMB(
+        stats.reduce((total, entry) => total + parseFloat(entry.Download_Rate_MB_per_Sec || 0), 0) / stats.length
+      );
+      setAverageDownloadRateMbits(
+        stats.reduce((total, entry) => total + parseFloat(entry.Download_Rate_Mbits_per_Sec || 0), 0) / stats.length
+      );
     }
   }, [stats]);
 
@@ -52,32 +68,44 @@ export default function StatsPage({ stats }) {
     ],
   };
 
-  // Data for Line Chart (Trends over time)
-  const lineChartData = {
-    labels: stats.map(entry => entry.Timestamp), // Timestamps as labels
+  // Data for Line Chart (Trends over time for MB/sec and Mbits/sec)
+  const lineChartDataRates = {
+    labels: stats.map(entry => entry.Timestamp),
     datasets: [
       {
-        label: 'Post Time (s)',
-        data: stats.map(entry => entry.Post_Time_Seconds),
+        label: 'Post Rate MB/sec',
+        data: stats.map(entry => entry.Post_Rate_MB_per_Sec),
         borderColor: '#4CAF50',
         fill: false,
       },
       {
-        label: 'Download Time (s)',
-        data: stats.map(entry => entry.Download_Time_Seconds),
+        label: 'Download Rate MB/sec',
+        data: stats.map(entry => entry.Download_Rate_MB_per_Sec),
         borderColor: '#FF5722',
+        fill: false,
+      },
+      {
+        label: 'Post Rate Mbits/sec',
+        data: stats.map(entry => entry.Post_Rate_Mbits_per_Sec),
+        borderColor: '#3b82f6',
+        fill: false,
+      },
+      {
+        label: 'Download Rate Mbits/sec',
+        data: stats.map(entry => entry.Download_Rate_Mbits_per_Sec),
+        borderColor: '#f97316',
         fill: false,
       },
     ],
   };
 
-  // Data for Bar Chart (Comparing average post and download times)
-  const timeComparisonData = {
-    labels: ['Average Post Time', 'Average Download Time'],
+  // Data for Bar Charts
+  const postDownloadRateComparisonData = {
+    labels: ['Post Rate MB/sec', 'Post Rate Mbits/sec', 'Download Rate MB/sec', 'Download Rate Mbits/sec'],
     datasets: [
       {
-        data: [averagePostTime, averageDownloadTime],
-        backgroundColor: ['#4CAF50', '#FF5722'],
+        data: [averagePostRateMB, averagePostRateMbits, averageDownloadRateMB, averageDownloadRateMbits],
+        backgroundColor: ['#4CAF50', '#3b82f6', '#FF5722', '#f97316'],
       },
     ],
   };
@@ -102,6 +130,14 @@ export default function StatsPage({ stats }) {
           <h2 className="text-xl font-semibold">Average Download Rate</h2>
           <p className="text-4xl font-bold">{averageDownloadRate.toFixed(2)} files/s</p>
         </div>
+        <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800">
+          <h2 className="text-xl font-semibold">Average Post Rate (MB/s)</h2>
+          <p className="text-4xl font-bold">{averagePostRateMB.toFixed(2)} MB/s</p>
+        </div>
+        <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800">
+          <h2 className="text-xl font-semibold">Average Download Rate (MB/s)</h2>
+          <p className="text-4xl font-bold">{averageDownloadRateMB.toFixed(2)} MB/s</p>
+        </div>
       </div>
 
       <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -110,14 +146,14 @@ export default function StatsPage({ stats }) {
           <Doughnut data={rateChartData} />
         </div>
         <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800">
-          <h2 className="text-xl font-semibold">Post and Download Times Over Time</h2>
-          <Line data={lineChartData} />
+          <h2 className="text-xl font-semibold">Post and Download Rates Over Time</h2>
+          <Line data={lineChartDataRates} />
         </div>
       </div>
 
       <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800 mt-6">
-        <h2 className="text-xl font-semibold">Average Post vs Download Time</h2>
-        <Bar data={timeComparisonData} />
+        <h2 className="text-xl font-semibold">Average Post vs Download Rates (MB/s & Mbits/s)</h2>
+        <Bar data={postDownloadRateComparisonData} />
       </div>
     </div>
   );
