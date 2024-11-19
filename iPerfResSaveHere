@@ -1,0 +1,110 @@
+{
+	"start":	{
+		"connected":	[{
+				"socket":	<redacted>,
+				"local_host":	<redacted>,
+				"local_port":	<redacted>,
+				"remote_host":	<redacted>,
+				"remote_port":	<redacted>
+			}],
+		"version":	"iperf 3.16+",
+		"system_info":	<redacted>,
+		"timestamp":	{
+			"time":	"Sun, 03 Nov 2024 02:33:17 GMT",
+			"timesecs":	1730601197
+		},
+		"connecting_to":	{
+			"host":	<redacted>,
+			"port":	<redacted>
+		},
+		"cookie":	<redacted>,
+		"tcp_mss_default":	<redacted>,
+		"target_bitrate":	0,
+		"fq_rate":	0,
+		"sock_bufsize":	0,
+		"sndbuf_actual":	<redacted>,
+		"rcvbuf_actual":	<redacted>,
+		"test_start":	{
+			"protocol":	<redacted>,
+			"num_streams":	1,
+			"blksize":	131072,
+			"omit":	0,
+			"duration":	10,
+			"bytes":	0,
+			"blocks":	0,
+			"reverse":	0,
+			"tos":	0,
+			"target_bitrate":	0,
+			"bidir":	0,
+			"fqrate":	0,
+			"interval":	1
+		}
+	},
+	"intervals":	[{
+			"streams":	[{
+					"socket":	<redacted>,
+					"start":	0,
+					"end":	1.014118,
+					"seconds":	1.014117956161499,
+					"bytes":	4063232,
+					"bits_per_second":	32053328.513220232,
+					"omitted":	false,
+					"sender":	true
+				}],
+			"sum":	{
+				"start":	0,
+				"end":	1.014118,
+				"seconds":	1.014117956161499,
+				"bytes":	4063232,
+				"bits_per_second":	32053328.513220232,
+				"omitted":	false,
+				"sender":	true
+			}
+		}, <redacted rest >],
+	"end":	{
+		"streams":	[{
+				"sender":	{
+					"socket":	<redacted>,
+					"start":	0,
+					"end":	10.026964,
+					"seconds":	10.026964,
+					"bytes":	37879808,
+					"bits_per_second":	30222354.842402946,
+					"sender":	true
+				},
+				"receiver":	{
+					"socket":	<redacted>,
+					"start":	0,
+					"end":	10.122861,
+					"seconds":	10.026964,
+					"bytes":	37617664,
+					"bits_per_second":	29728879.217051383,
+					"sender":	true
+				}
+			}],
+		"sum_sent":	{
+			"start":	0,
+			"end":	10.026964,
+			"seconds":	10.026964,
+			"bytes":	37879808,
+			"bits_per_second":	30222354.842402946,
+			"sender":	true
+		},
+		"sum_received":	{
+			"start":	0,
+			"end":	10.122861,
+			"seconds":	10.122861,
+			"bytes":	37617664,
+			"bits_per_second":	29728879.217051383,
+			"sender":	true
+		},
+		"cpu_utilization_percent":	{
+			"host_total":	0.609590570459772,
+			"host_user":	0,
+			"host_system":	0.609590570459772,
+			"remote_total":	6.01593125282213,
+			"remote_user":	2.0053104176073764,
+			"remote_system":	4.0106208352147528
+		}
+	}
+}
