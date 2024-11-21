@@ -1,7 +1,7 @@
-// pages/stats.js
 import { loadCsvData } from '../utils/loadCsv';
 import { useEffect, useState } from 'react';
 import { Doughnut, Line, Bar } from 'react-chartjs-2';
+import ReactSpeedometer from "react-d3-speedometer";
 import {
   Chart,
   ArcElement,
@@ -14,7 +14,7 @@ import {
   Legend,
 } from 'chart.js';
 
-// Register the required elements
+// Register Chart.js elements
 Chart.register(ArcElement, LineElement, BarElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 export default function StatsPage({ stats }) {
@@ -29,7 +29,6 @@ export default function StatsPage({ stats }) {
 
   useEffect(() => {
     if (stats.length > 0) {
-      // Calculate averages
       setAveragePostTime(
         stats.reduce((total, entry) => total + parseFloat(entry.Post_Time_Seconds || 0), 0) / stats.length
       );
@@ -113,6 +112,36 @@ export default function StatsPage({ stats }) {
   return (
     <div className="min-h-screen bg-black text-white p-6">
       <h1 className="text-3xl font-bold mb-6">WiFi Speed Dashboard</h1>
+
+      {/* Speedometers */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800">
+          <h2 className="text-xl font-semibold text-center mb-4">Post Rate (MB/s)</h2>
+          <ReactSpeedometer
+            maxValue={100} // Adjust this based on expected max value
+            value={averagePostRateMB}
+            segments={10}
+            needleColor="#4CAF50"
+            startColor="#FF5722"
+            endColor="#4CAF50"
+            height={200}
+          />
+        </div>
+        <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800">
+          <h2 className="text-xl font-semibold text-center mb-4">Download Rate (MB/s)</h2>
+          <ReactSpeedometer
+            maxValue={100} // Adjust this based on expected max value
+            value={averageDownloadRateMB}
+            segments={10}
+            needleColor="#FF5722"
+            startColor="#FF5722"
+            endColor="#4CAF50"
+            height={200}
+          />
+        </div>
+      </div>
+
+      {/* Existing Visualizations */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800">
           <h2 className="text-xl font-semibold">Average Post Time</h2>
@@ -121,22 +150,6 @@ export default function StatsPage({ stats }) {
         <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800">
           <h2 className="text-xl font-semibold">Average Download Time</h2>
           <p className="text-4xl font-bold">{averageDownloadTime.toFixed(2)} s</p>
-        </div>
-        <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800">
-          <h2 className="text-xl font-semibold">Average Post Rate</h2>
-          <p className="text-4xl font-bold">{averagePostRate.toFixed(2)} files/s</p>
-        </div>
-        <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800">
-          <h2 className="text-xl font-semibold">Average Download Rate</h2>
-          <p className="text-4xl font-bold">{averageDownloadRate.toFixed(2)} files/s</p>
-        </div>
-        <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800">
-          <h2 className="text-xl font-semibold">Average Post Rate (MB/s)</h2>
-          <p className="text-4xl font-bold">{averagePostRateMB.toFixed(2)} MB/s</p>
-        </div>
-        <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800">
-          <h2 className="text-xl font-semibold">Average Download Rate (MB/s)</h2>
-          <p className="text-4xl font-bold">{averageDownloadRateMB.toFixed(2)} MB/s</p>
         </div>
       </div>
 
