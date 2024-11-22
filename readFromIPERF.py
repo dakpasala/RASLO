@@ -9,7 +9,7 @@ output_csv_path = 'NetworkSpeed.csv'
 test_data = []
 
 # Regular expressions to extract data
-host_pattern = r'Machine: (.+?)\s'
+region_pattern = r'==========Beginning test to (.+?) Database=========='
 timestamp_pattern = r'\w+,\s\w+\s\d+,\s\d+\s[\d:]+(?:\s[A|P]M)?'
 post_time_pattern = r'Seconds to Post File: ([\d.]+)s'
 download_time_pattern = r'Seconds to Download File: ([\d.]+)s'
@@ -19,7 +19,7 @@ mb_mbits_pattern = r'([\d.]+) MB/sec, ([\d.]+) Mbits/sec'
 
 # Initialize an empty dictionary for the current test metrics
 current_test = {
-    'Host': None,
+    'Region': None,
     'Timestamp': None,
     'Post_Time_Seconds': None,
     'Download_Time_Seconds': None,
@@ -43,11 +43,11 @@ def save_current_test():
 # Read through the log file and collect data
 with open(log_file_path, 'r') as file:
     for line in file:
-        # Extract host/device information
-        host_match = re.search(host_pattern, line)
-        if host_match:
-            current_test['Host'] = host_match.group(1).strip()
-        
+        # Extract region information
+        region_match = re.search(region_pattern, line)
+        if region_match:
+            current_test['Region'] = region_match.group(1).strip()
+
         # Extract timestamp
         timestamp_match = re.search(timestamp_pattern, line)
         if timestamp_match:
@@ -56,7 +56,7 @@ with open(log_file_path, 'r') as file:
                 save_current_test()  # Save the current test entry
                 # Reset for the next test with new timestamp
                 current_test = {
-                    'Host': current_test['Host'], 
+                    'Region': current_test['Region'], 
                     'Timestamp': timestamp_match.group(0),
                     'Post_Time_Seconds': None, 
                     'Download_Time_Seconds': None, 
@@ -100,7 +100,7 @@ with open(log_file_path, 'r') as file:
         if all(current_test[key] is not None for key in ['Post_Time_Seconds', 'Download_Time_Seconds', 
                                                          'Post_Rate_Files_per_Sec', 'Download_Rate_Files_per_Sec']):
             save_current_test()
-            # Reset only metrics, keeping Host and Timestamp for further entries with the same timestamp
+            # Reset only metrics, keeping Region and Timestamp for further entries with the same timestamp
             current_test['Post_Time_Seconds'] = None
             current_test['Download_Time_Seconds'] = None
             current_test['Post_Rate_Files_per_Sec'] = None
@@ -114,7 +114,7 @@ with open(log_file_path, 'r') as file:
 save_current_test()
 
 # Convert the list to a DataFrame
-columns = ['Host', 'Timestamp', 'Post_Time_Seconds', 'Download_Time_Seconds', 'Post_Rate_Files_per_Sec', 
+columns = ['Region', 'Timestamp', 'Post_Time_Seconds', 'Download_Time_Seconds', 'Post_Rate_Files_per_Sec', 
            'Download_Rate_Files_per_Sec', 'Post_Rate_MB_per_Sec', 'Post_Rate_Mbits_per_Sec', 
            'Download_Rate_MB_per_Sec', 'Download_Rate_Mbits_per_Sec']
 consolidated_df = pd.DataFrame(test_data, columns=columns)
