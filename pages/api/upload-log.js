@@ -1,5 +1,6 @@
 import formidable from "formidable";
 import { exec } from "child_process";
+import os from "os";
 import path from "path";
 
 export const config = {
@@ -10,8 +11,9 @@ export const config = {
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
+    // Configure formidable to use the OS's temp directory
     const form = formidable({
-      uploadDir: path.join(process.cwd(), "uploads"), // Set the upload directory
+      uploadDir: os.tmpdir(), // Use the system's temporary directory
       keepExtensions: true, // Keep file extensions
     });
 
