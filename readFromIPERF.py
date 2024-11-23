@@ -1,8 +1,9 @@
 import re
 import pandas as pd
+import sys
 
 # Paths to the input log file and output CSV file
-log_file_path = 'iPerf.log'  
+log_file_path = sys.argv[1]  
 output_csv_path = 'NetworkSpeed.csv'
 
 # Initialize list to store consolidated data
@@ -117,8 +118,12 @@ save_current_test()
 columns = ['Region', 'Timestamp', 'Post_Time_Seconds', 'Download_Time_Seconds', 'Post_Rate_Files_per_Sec', 
            'Download_Rate_Files_per_Sec', 'Post_Rate_MB_per_Sec', 'Post_Rate_Mbits_per_Sec', 
            'Download_Rate_MB_per_Sec', 'Download_Rate_Mbits_per_Sec']
-consolidated_df = pd.DataFrame(test_data, columns=columns)
+new_data_df = pd.DataFrame(test_data, columns=columns)
 
-# Write the DataFrame to the CSV file
-consolidated_df.to_csv(output_csv_path, index=False)
-print(f"Data has been written to {output_csv_path}")
+# Append the new data to the existing CSV file without overwriting
+try:
+    with open(output_csv_path, 'a') as f:
+        new_data_df.to_csv(f, index=False, header=f.tell() == 0)  # Add header only if file is empty
+    print(f"Data has been appended to {output_csv_path}")
+except Exception as e:
+    print(f"Error appending data to CSV: {e}")

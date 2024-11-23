@@ -8,6 +8,7 @@
     },
     "dependencies": {
         "chart.js": "^4.4.6",
+        "formidable": "^3.5.2",
         "next": "latest",
         "pivot": "^0.1.0",
         "plotly": "^1.0.6",

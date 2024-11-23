@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Doughnut, Line, Bar } from 'react-chartjs-2';
+import { Doughnut, Line } from 'react-chartjs-2';
 import ReactSpeedometer from 'react-d3-speedometer';
 import {
   Chart,
   ArcElement,
   LineElement,
-  BarElement,
   CategoryScale,
   LinearScale,
   PointElement,
@@ -15,15 +14,48 @@ import {
 import { loadCsvData } from '../utils/loadCsv';
 
 // Register Chart.js elements
-Chart.register(ArcElement, LineElement, BarElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend);
+Chart.register(ArcElement, LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 export default function StatsPage({ locations, statsByRegion }) {
   const [currentRegion, setCurrentRegion] = useState(locations[0]); // Default to the first location
   const [currentStats, setCurrentStats] = useState(statsByRegion[locations[0]]);
+  const [uploadMessage, setUploadMessage] = useState(''); // Message to display upload status
 
   useEffect(() => {
     setCurrentStats(statsByRegion[currentRegion]);
   }, [currentRegion, statsByRegion]);
+
+  // Handle file upload
+  const handleFileUpload = async (event) => {
+    const file = event.target.files[0];
+    if (file && file.name.endsWith('.log')) {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const response = await fetch('/api/upload-log', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          setUploadMessage(result.message);
+
+          // Reload the page to reflect updated data
+          window.location.reload();
+        } else {
+          const result = await response.json();
+          setUploadMessage(`Error: ${result.message}`);
+        }
+      } catch (error) {
+        console.error('Error uploading file:', error);
+        setUploadMessage('An error occurred. Please try again.');
+      }
+    } else {
+      setUploadMessage('Please upload a valid .log file.');
+    }
+  };
 
   // Data for Doughnut Chart
   const rateChartData = {
@@ -31,27 +63,27 @@ export default function StatsPage({ locations, statsByRegion }) {
     datasets: [
       {
         data: [
-          currentStats.averagePostRateFilesPerSec || 0,
-          currentStats.averageDownloadRateFilesPerSec || 0,
+          currentStats?.averagePostRate || 0,
+          currentStats?.averageDownloadRate || 0,
         ],
         backgroundColor: ['#4CAF50', '#FF5722'],
       },
     ],
   };
 
-  // Data for Line Chart (Trends over time for MB/sec and Mbits/sec)
+  // Data for Line Chart (Trends over time for MB/sec)
   const lineChartDataRates = {
-    labels: currentStats.timestamps || [],
+    labels: currentStats?.timestamps || [],
     datasets: [
       {
         label: 'Post Rate MB/sec',
-        data: currentStats.postRatesMB || [],
+        data: currentStats?.postRatesMB || [],
         borderColor: '#4CAF50',
         fill: false,
       },
       {
         label: 'Download Rate MB/sec',
-        data: currentStats.downloadRatesMB || [],
+        data: currentStats?.downloadRatesMB || [],
         borderColor: '#FF5722',
         fill: false,
       },
@@ -64,7 +96,7 @@ export default function StatsPage({ locations, statsByRegion }) {
 
       {/* Location Selection Buttons */}
       <div className="flex flex-wrap gap-4 mb-6">
-        {locations.map((region) => (
+        {Object.keys(statsByRegion).map((region) => (
           <button
             key={region}
             onClick={() => setCurrentRegion(region)}
@@ -77,6 +109,18 @@ export default function StatsPage({ locations, statsByRegion }) {
         ))}
       </div>
 
+      {/* Add Data Button */}
+      <div className="mb-6">
+        <input
+          type="file"
+          name="file" // <-- This ensures the field name matches the backend
+          accept=".log"
+          onChange={handleFileUpload}
+          className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700"
+        />
+        {uploadMessage && <p className="mt-2 text-green-500">{uploadMessage}</p>}
+      </div>
+
       <h2 className="text-2xl font-bold mb-4">Region: {currentRegion}</h2>
 
       {/* Speedometers */}
@@ -85,7 +129,7 @@ export default function StatsPage({ locations, statsByRegion }) {
           <h2 className="text-xl font-semibold text-center mb-4">Post Rate (MB/s)</h2>
           <ReactSpeedometer
             maxValue={100}
-            value={currentStats.averagePostRateMBPerSec || 0}
+            value={currentStats?.averagePostRate || 0}
             segments={10}
             needleColor="#4CAF50"
             startColor="#FF5722"
@@ -97,7 +141,7 @@ export default function StatsPage({ locations, statsByRegion }) {
           <h2 className="text-xl font-semibold text-center mb-4">Download Rate (MB/s)</h2>
           <ReactSpeedometer
             maxValue={100}
-            value={currentStats.averageDownloadRateMBPerSec || 0}
+            value={currentStats?.averageDownloadRate || 0}
             segments={10}
             needleColor="#FF5722"
             startColor="#FF5722"
@@ -131,47 +175,25 @@ export async function getStaticProps() {
     if (!acc[region]) {
       acc[region] = {
         timestamps: [],
-        postTimes: [],
-        downloadTimes: [],
+        averagePostRate: 0,
+        averageDownloadRate: 0,
         postRatesMB: [],
         downloadRatesMB: [],
-        averagePostRateFilesPerSec: 0,
-        averageDownloadRateFilesPerSec: 0,
-        averagePostRateMBPerSec: 0,
-        averageDownloadRateMBPerSec: 0,
       };
     }
     acc[region].timestamps.push(entry.Timestamp || null);
-    acc[region].postTimes.push(entry.Post_Time_Seconds || 0);
-    acc[region].downloadTimes.push(entry.Download_Time_Seconds || 0);
     acc[region].postRatesMB.push(entry.Post_Rate_MB_per_Sec || 0);
     acc[region].downloadRatesMB.push(entry.Download_Rate_MB_per_Sec || 0);
-
-    // Calculate averages on the fly
-    acc[region].averagePostRateFilesPerSec += entry.Post_Rate_Files_per_Sec || 0;
-    acc[region].averageDownloadRateFilesPerSec += entry.Download_Rate_Files_per_Sec || 0;
-    acc[region].averagePostRateMBPerSec += entry.Post_Rate_MB_per_Sec || 0;
-    acc[region].averageDownloadRateMBPerSec += entry.Download_Rate_MB_per_Sec || 0;
-
+    acc[region].averagePostRate =
+      acc[region].postRatesMB.reduce((a, b) => a + b, 0) / acc[region].postRatesMB.length;
+    acc[region].averageDownloadRate =
+      acc[region].downloadRatesMB.reduce((a, b) => a + b, 0) / acc[region].downloadRatesMB.length;
     return acc;
   }, {});
 
-  // Finalize averages for each region
-  for (const region in statsByRegion) {
-    const data = statsByRegion[region];
-    const entryCount = data.timestamps.length;
-    statsByRegion[region].averagePostRateFilesPerSec /= entryCount;
-    statsByRegion[region].averageDownloadRateFilesPerSec /= entryCount;
-    statsByRegion[region].averagePostRateMBPerSec /= entryCount;
-    statsByRegion[region].averageDownloadRateMBPerSec /= entryCount;
-  }
-
-  // Get all unique locations
-  const locations = Object.keys(statsByRegion);
-
   return {
     props: {
-      locations,
+      locations: Object.keys(statsByRegion),
       statsByRegion,
     },
   };
