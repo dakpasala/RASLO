@@ -1,7 +1,6 @@
 import formidable from "formidable";
-import { exec } from "child_process";
-import os from "os";
 import path from "path";
+import processLogFile from "./processLog";
 
 export const config = {
   api: {
@@ -11,13 +10,11 @@ export const config = {
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    // Configure formidable to use the OS's temp directory
     const form = formidable({
-      uploadDir: os.tmpdir(), // Use the system's temporary directory
       keepExtensions: true, // Keep file extensions
     });
 
-    form.parse(req, (err, fields, files) => {
+    form.parse(req, async (err, fields, files) => {
       if (err) {
         console.error("Error parsing file:", err);
         return res.status(500).json({ message: "Error parsing file" });
@@ -26,7 +23,7 @@ export default async function handler(req, res) {
       console.log("Fields:", fields);
       console.log("Files:", files);
 
-      // Access the file path correctly (handle array case)
+      // Access the file path correctly
       const uploadedFile = Array.isArray(files.file) ? files.file[0] : files.file;
       const uploadedFilePath = uploadedFile?.filepath;
 
@@ -37,18 +34,14 @@ export default async function handler(req, res) {
 
       console.log("File uploaded successfully:", uploadedFilePath);
 
-      // Execute the Python script
-      exec(`python3 readFromIperf.py "${uploadedFilePath}"`, (error, stdout, stderr) => {
-        if (error) {
-          console.error("Python script error:", stderr);
-          return res.status(500).json({ message: "Error processing log file" });
-        }
-
-        console.log("Python script output:", stdout);
-
-        // Respond with success
+      try {
+        // Use the processLogFile function to handle the uploaded log file
+        await processLogFile(uploadedFilePath);
         res.status(200).json({ message: "File processed successfully!" });
-      });
+      } catch (error) {
+        console.error("Error processing log file:", error);
+        res.status(500).json({ message: "Error processing log file" });
+      }
     });
   } else {
     // If method is not POST, return 405 (Method Not Allowed)

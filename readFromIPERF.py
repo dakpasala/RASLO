@@ -3,7 +3,7 @@ import pandas as pd
 import sys
 
 # Paths to the input log file and output CSV file
-log_file_path = sys.argv[1]  
+log_file_path = 'iPerf.log' #sys.argv[1]  
 output_csv_path = 'NetworkSpeed.csv'
 
 # Initialize list to store consolidated data
