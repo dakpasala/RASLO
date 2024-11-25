@@ -8,6 +8,7 @@
     },
     "dependencies": {
         "@google-cloud/bigquery": "^7.9.1",
+        "@supabase/supabase-js": "^2.46.1",
         "autoprefixer": "^10.4.20",
         "chart.js": "^4.4.6",
         "formidable": "^3.5.2",
