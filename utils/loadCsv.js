@@ -2,8 +2,8 @@ import { createClient } from "@supabase/supabase-js";
 
 // Initialize Supabase client
 const supabase = createClient(
-  process.env.SUPABASE_URL, // Your Supabase URL from environment variables
-  process.env.SUPABASE_ANON_KEY // Your Supabase anon key from environment variables
+  process.env.NEXT_PUBLIC_SUPABASE_URL, // Your Supabase URL from environment variables
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY // Your Supabase anon key from environment variables
 );
 
 export const loadCsvData = async () => {

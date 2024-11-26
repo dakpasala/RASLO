@@ -2,11 +2,11 @@ import formidable from "formidable";
 import processLogFile from "./processLog";
 import { createClient } from "@supabase/supabase-js";
 
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL; // URL is okay to be public
+const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY; // Server-side only
+
 // Initialize Supabase client
-const supabase = createClient(
-  process.env.SUPABASE_URL, // Your Supabase URL from environment variables
-  process.env.SUPABASE_ANON_KEY // Your Supabase anon key from environment variables
-);
+export const supabaseServer = createClient(supabaseUrl, supabaseServiceRoleKey);
 
 export const config = {
   api: {
