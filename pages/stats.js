@@ -31,19 +31,23 @@ export default function StatsPage({ locations, statsByRegion }) {
     if (file && file.name.endsWith('.log')) {
       const formData = new FormData();
       formData.append('file', file);
-
+  
       try {
         const response = await fetch('/api/upload-log', {
           method: 'POST',
           body: formData,
         });
-
+  
         if (response.ok) {
           const result = await response.json();
           setUploadMessage(result.message);
-
-          // Reload the page to reflect updated data
-          window.location.reload();
+  
+          // Re-fetch updated data without reloading
+          const updatedResponse = await fetch('/api/get-stats');
+          const updatedData = await updatedResponse.json();
+  
+          setCurrentStats(updatedData[currentRegion]);
+          console.log('Updated Stats:', updatedData);
         } else {
           const result = await response.json();
           setUploadMessage(`Error: ${result.message}`);
@@ -55,7 +59,7 @@ export default function StatsPage({ locations, statsByRegion }) {
     } else {
       setUploadMessage('Please upload a valid .log file.');
     }
-  };
+  };  
 
   // Data for Doughnut Chart
   const rateChartData = {
@@ -167,7 +171,13 @@ export default function StatsPage({ locations, statsByRegion }) {
 }
 
 export async function getStaticProps() {
-  const stats = await loadCsvData();
+  let stats = [];
+
+  try {
+    stats = await loadCsvData();
+  } catch (error) {
+    console.error('Failed to load data from Supabase:', error.message);
+  }
 
   // Group data by Region
   const statsByRegion = stats.reduce((acc, entry) => {
