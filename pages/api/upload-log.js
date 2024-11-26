@@ -45,7 +45,7 @@ export default async function handler(req, res) {
         const processedData = await processLogFile(uploadedFilePath);
 
         // Insert processed data into Supabase
-        const { data, error } = await supabase
+        const { data, error } = await supabaseServer
           .from("speeds") 
           .insert(processedData); // Insert the array of processed data
 
