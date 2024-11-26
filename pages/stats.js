@@ -22,6 +22,8 @@ export default function StatsPage({ locations, statsByRegion }) {
   const [uploadMessage, setUploadMessage] = useState(''); // Message to display upload status
 
   useEffect(() => {
+    console.log("Current Region:", currentRegion);
+    console.log("Stats for Current Region:", statsByRegion[currentRegion]);
     setCurrentStats(statsByRegion[currentRegion]);
   }, [currentRegion, statsByRegion]);
 
@@ -46,8 +48,8 @@ export default function StatsPage({ locations, statsByRegion }) {
           const updatedResponse = await fetch('/api/get-stats');
           const updatedData = await updatedResponse.json();
   
+          console.log("Updated Stats from API:", updatedData);
           setCurrentStats(updatedData[currentRegion]);
-          console.log('Updated Stats:', updatedData);
         } else {
           const result = await response.json();
           setUploadMessage(`Error: ${result.message}`);
@@ -93,6 +95,9 @@ export default function StatsPage({ locations, statsByRegion }) {
       },
     ],
   };
+
+  console.log("Locations:", locations);
+  console.log("Stats by Region:", statsByRegion);
 
   return (
     <div className="min-h-screen bg-black text-white p-6">
@@ -171,10 +176,12 @@ export default function StatsPage({ locations, statsByRegion }) {
 }
 
 export async function getServerSideProps() {
+  console.log("Fetching data from Supabase...");
   let stats = [];
 
   try {
     stats = await loadCsvData();
+    console.log("Fetched Stats:", stats);
   } catch (error) {
     console.error("Failed to load data from Supabase:", error.message);
   }
@@ -199,6 +206,8 @@ export async function getServerSideProps() {
       acc[region].downloadRatesMB.reduce((a, b) => a + b, 0) / acc[region].downloadRatesMB.length;
     return acc;
   }, {});
+
+  console.log("Stats by Region:", statsByRegion);
 
   return {
     props: {
