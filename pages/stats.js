@@ -170,18 +170,17 @@ export default function StatsPage({ locations, statsByRegion }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   let stats = [];
 
   try {
     stats = await loadCsvData();
   } catch (error) {
-    console.error('Failed to load data from Supabase:', error.message);
+    console.error("Failed to load data from Supabase:", error.message);
   }
 
-  // Group data by Region
   const statsByRegion = stats.reduce((acc, entry) => {
-    const region = entry.Region || 'Unknown'; // Handle undefined Region values
+    const region = entry.Region || "Unknown";
     if (!acc[region]) {
       acc[region] = {
         timestamps: [],
