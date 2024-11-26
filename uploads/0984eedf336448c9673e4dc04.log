@@ -1,0 +1,1083 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20241112153849
+Username: RA-SLO\nagios
+RunAs User: RA-SLO\nagios
+Configuration Name: 
+Machine: ITRT (Microsoft Windows NT 10.0.19045.0)
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command if((Get-ExecutionPolicy ) -ne 'AllSigned') { Set-ExecutionPolicy -Scope Process Bypass }; & 'C:\Users\nagios\Desktop\Speed Tests\NetworkTestRaslo.ps1'
+Process ID: 16344
+PSVersion: 5.1.19041.3031
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.3031
+BuildVersion: 10.0.19041.3031
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\speedtest\NetworkSpeedTestLog-internal.log
+==========Starting Test==========
+
+Tuesday, November 12, 2024 3:38:49 PM
+==========Beginning test to Raslo Database==========
+Beginning test 20mb over 4 files.
+Environment:
+DRS_HTTPSERVER: 172.17.200.90/DRPacs
+DRSYSCFG:       C:\DRS\Guest\Guest490.ini
+
+Running arguments:
+C:\DRS\Sys\Sysx86\CopyServerFileTest.exe
+images.rasloimaging.com/drpacs
+
+Setting up...
+Logging in...
+DRHttpClientSetup completes setup
+Application Login Success
+
+Creating files....
+
+Files in directory: 2
+Directory size: 10.00 MB, 80.00 Mbits
+
+Posting directory files to DRS_HTTPSERVER: images.rasloimaging.com DIRECTORY: DRS\TEMP\CpyTestPOST\
+from LOCAL: C:\DRS\TEMP\
+..
+Posting Files Succeeded
+
+Seconds to Post File: 0.5614s
+Post Directory rate: 3.562 files/sec
+                     17.812 MB/sec, 142.497 Mbits/sec
+
+Downloading directory files from DRS_HTTPSERVER: images.rasloimaging.com DIRECTORY: DRS\TEMP\CpyTestPOST\
+to LOCAL: C:\DRS\TEMP\CpyTestDOWNLOAD\
+..
+Downloading Files Succeeded
+
+Seconds to Download File: 0.4328s
+Download Directory rate: 4.621 files/sec
+                         23.104 MB/sec, 184.835 Mbits/sec
+
+Total seconds to Post and Download: 0.9953s
+
+Clean up:
+Deleted 2 files
+Conducting 5 ping test to Image Server
+
+Pinging images.rasloimaging.com [172.17.200.90] with 32 bytes of data:
+Reply from 172.17.200.90: bytes=32 time=1ms TTL=127
+Reply from 172.17.200.90: bytes=32 time=1ms TTL=127
+Reply from 172.17.200.90: bytes=32 time=1ms TTL=127
+Reply from 172.17.200.90: bytes=32 time=1ms TTL=127
+Reply from 172.17.200.90: bytes=32 time=1ms TTL=127
+
+Ping statistics for 172.17.200.90:
+    Packets: Sent = 5, Received = 5, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 1ms, Maximum = 1ms, Average = 1ms
+Beginning test 20mb over 4 files.
+Environment:
+DRS_HTTPSERVER: 172.17.200.90/DRPacs
+DRSYSCFG:       C:\DRS\Guest\Guest490.ini
+
+Running arguments:
+C:\DRS\Sys\Sysx86\CopyServerFileTest.exe
+172.17.200.30/drpacs
+
+Setting up...
+Logging in...
+DRHttpClientSetup completes setup
+Application Login Success
+
+Creating files....
+
+Files in directory: 2
+Directory size: 10.00 MB, 80.00 Mbits
+
+Posting directory files to DRS_HTTPSERVER: 172.17.200.30 DIRECTORY: DRS\TEMP\CpyTestPOST\
+from LOCAL: C:\DRS\TEMP\
+..
+Posting Files Succeeded
+
+Seconds to Post File: 1.0997s
+Post Directory rate: 1.819 files/sec
+                     9.094 MB/sec, 72.748 Mbits/sec
+
+Downloading directory files from DRS_HTTPSERVER: 172.17.200.30 DIRECTORY: DRS\TEMP\CpyTestPOST\
+to LOCAL: C:\DRS\TEMP\CpyTestDOWNLOAD\
+..
+Downloading Files Succeeded
+
+Seconds to Download File: 0.4584s
+Download Directory rate: 4.363 files/sec
+                         21.816 MB/sec, 174.530 Mbits/sec
+
+Total seconds to Post and Download: 1.5669s
+
+Clean up:
+Deleted 2 files
+Conducting 5 ping test to Image Server
+
+Pinging 172.17.200.30 with 32 bytes of data:
+Reply from 172.17.200.30: bytes=32 time=1ms TTL=127
+Reply from 172.17.200.30: bytes=32 time=1ms TTL=127
+Reply from 172.17.200.30: bytes=32 time=1ms TTL=127
+Reply from 172.17.200.30: bytes=32 time=1ms TTL=127
+Reply from 172.17.200.30: bytes=32 time=1ms TTL=127
+
+Ping statistics for 172.17.200.30:
+    Packets: Sent = 5, Received = 5, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 1ms, Maximum = 1ms, Average = 1ms
+Beginning test 20mb over 4 files.
+Environment:
+DRS_HTTPSERVER: 172.17.200.90/DRPacs
+DRSYSCFG:       C:\DRS\Guest\Guest490.ini
+
+Running arguments:
+C:\DRS\Sys\Sysx86\CopyServerFileTest.exe
+172.17.200.90/DRPacs
+
+Setting up...
+Logging in...
+DRHttpClientSetup completes setup
+Application Login Success
+
+Creating files....
+
+Files in directory: 4
+Directory size: 20.00 MB, 160.00 Mbits
+
+Posting directory files to DRS_HTTPSERVER: 172.17.200.90 DIRECTORY: DRS\TEMP\CpyTestPOST\
+from LOCAL: C:\DRS\TEMP\
+....
+Posting Files Succeeded
+
+Seconds to Post File: 13.0706s
+Post Directory rate: 0.306 files/sec
+                     1.530 MB/sec, 12.241 Mbits/sec
+
+Downloading directory files from DRS_HTTPSERVER: 172.17.200.90 DIRECTORY: DRS\TEMP\CpyTestPOST\
+to LOCAL: C:\DRS\TEMP\CpyTestDOWNLOAD\
+....
+Downloading Files Succeeded
+
+Seconds to Download File: 0.8127s
+Download Directory rate: 4.922 files/sec
+                         24.608 MB/sec, 196.864 Mbits/sec
+
+Total seconds to Post and Download: 13.8866s
+
+Clean up:
+Deleted 4 files
+Conducting 5 ping test to Image Server
+
+Pinging 172.17.200.90 with 32 bytes of data:
+Reply from 172.17.200.90: bytes=32 time=1ms TTL=127
+Reply from 172.17.200.90: bytes=32 time=1ms TTL=127
+Reply from 172.17.200.90: bytes=32 time=1ms TTL=127
+Reply from 172.17.200.90: bytes=32 time=1ms TTL=127
+Reply from 172.17.200.90: bytes=32 time=1ms TTL=127
+
+Ping statistics for 172.17.200.90:
+    Packets: Sent = 5, Received = 5, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 1ms, Maximum = 1ms, Average = 1ms
+==========Tenet Health Section==========
+==========Beginning test to Sierra Vista Database==========
+Beginning test 20mb over 4 files.
+Environment:
+DRS_HTTPSERVER: 172.17.200.90/DRPacs
+DRSYSCFG:       C:\DRS\Guest\Guest490.ini
+
+Running arguments:
+C:\DRS\Sys\Sysx86\CopyServerFileTest.exe
+imaging.sierravistaregional.com/drpacs
+
+Setting up...
+Logging in...
+DRHttpClientSetup completes setup
+Application Login Success
+
+Creating files....
+
+Files in directory: 2
+Directory size: 10.00 MB, 80.00 Mbits
+
+Posting directory files to DRS_HTTPSERVER: imaging.sierravistaregional.com DIRECTORY: DRS\TEMP\CpyTestPOST\
+from LOCAL: C:\DRS\TEMP\
+..
+Posting Files Succeeded
+
+Seconds to Post File: 0.9300s
+Post Directory rate: 2.151 files/sec
+                     10.753 MB/sec, 86.025 Mbits/sec
+
+Downloading directory files from DRS_HTTPSERVER: imaging.sierravistaregional.com DIRECTORY: DRS\TEMP\CpyTestPOST\
+to LOCAL: C:\DRS\TEMP\CpyTestDOWNLOAD\
+..
+Downloading Files Succeeded
+
+Seconds to Download File: 1.3590s
+Download Directory rate: 1.472 files/sec
+                         7.358 MB/sec, 58.865 Mbits/sec
+
+Total seconds to Post and Download: 2.2923s
+
+Clean up:
+Deleted 2 files
+Conducting 5 ping test to Image Server
+
+Pinging imaging.sierravistaregional.com [10.102.109.40] with 32 bytes of data:
+Reply from 10.102.109.40: bytes=32 time=2ms TTL=126
+Reply from 10.102.109.40: bytes=32 time=2ms TTL=126
+Reply from 10.102.109.40: bytes=32 time=2ms TTL=126
+Reply from 10.102.109.40: bytes=32 time=2ms TTL=126
+Reply from 10.102.109.40: bytes=32 time=2ms TTL=126
+
+Ping statistics for 10.102.109.40:
+    Packets: Sent = 5, Received = 5, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 2ms, Maximum = 2ms, Average = 2ms
+Beginning test 20mb over 4 files.
+Environment:
+DRS_HTTPSERVER: 172.17.200.90/DRPacs
+DRSYSCFG:       C:\DRS\Guest\Guest490.ini
+
+Running arguments:
+C:\DRS\Sys\Sysx86\CopyServerFileTest.exe
+10.102.109.12/drpacs
+
+Setting up...
+Logging in...
+DRHttpClientSetup completes setup
+Application Login Success
+
+Creating files....
+
+Files in directory: 2
+Directory size: 10.00 MB, 80.00 Mbits
+
+Posting directory files to DRS_HTTPSERVER: 10.102.109.12 DIRECTORY: DRS\TEMP\CpyTestPOST\
+from LOCAL: C:\DRS\TEMP\
+..
+Posting Files Succeeded
+
+Seconds to Post File: 0.9812s
+Post Directory rate: 2.038 files/sec
+                     10.191 MB/sec, 81.530 Mbits/sec
+
+Downloading directory files from DRS_HTTPSERVER: 10.102.109.12 DIRECTORY: DRS\TEMP\CpyTestPOST\
+to LOCAL: C:\DRS\TEMP\CpyTestDOWNLOAD\
+..
+Downloading Files Succeeded
+
+Seconds to Download File: 0.5011s
+Download Directory rate: 3.991 files/sec
+                         19.956 MB/sec, 159.645 Mbits/sec
+
+Total seconds to Post and Download: 1.4853s
+
+Clean up:
+Deleted 2 files
+Conducting 5 ping test to Image Server
+
+Pinging 10.102.109.12 with 32 bytes of data:
+Reply from 10.102.109.12: bytes=32 time=4ms TTL=125
+Reply from 10.102.109.12: bytes=32 time=6ms TTL=125
+Reply from 10.102.109.12: bytes=32 time=3ms TTL=125
+Reply from 10.102.109.12: bytes=32 time=3ms TTL=125
+Reply from 10.102.109.12: bytes=32 time=3ms TTL=125
+
+Ping statistics for 10.102.109.12:
+    Packets: Sent = 5, Received = 5, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 3ms, Maximum = 6ms, Average = 3ms
+Beginning test 20mb over 4 files.
+Environment:
+DRS_HTTPSERVER: 172.17.200.90/DRPacs
+DRSYSCFG:       C:\DRS\Guest\Guest490.ini
+
+Running arguments:
+C:\DRS\Sys\Sysx86\CopyServerFileTest.exe
+10.102.109.40/DRPacs
+
+Setting up...
+Logging in...
+DRHttpClientSetup completes setup
+Application Login Success
+
+Creating files....
+
+Files in directory: 4
+Directory size: 20.00 MB, 160.00 Mbits
+
+Posting directory files to DRS_HTTPSERVER: 10.102.109.40 DIRECTORY: DRS\TEMP\CpyTestPOST\
+from LOCAL: C:\DRS\TEMP\
+....
+Posting Files Succeeded
+
+Seconds to Post File: 1.4136s
+Post Directory rate: 2.830 files/sec
+                     14.148 MB/sec, 113.188 Mbits/sec
+
+Downloading directory files from DRS_HTTPSERVER: 10.102.109.40 DIRECTORY: DRS\TEMP\CpyTestPOST\
+to LOCAL: C:\DRS\TEMP\CpyTestDOWNLOAD\
+....
+Downloading Files Succeeded
+
+Seconds to Download File: 1.1991s
+Download Directory rate: 3.336 files/sec
+                         16.679 MB/sec, 133.434 Mbits/sec
+
+Total seconds to Post and Download: 2.6187s
+
+Clean up:
+Deleted 4 files
+Conducting 5 ping test to Image Server
+
+Pinging 10.102.109.40 with 32 bytes of data:
+Reply from 10.102.109.40: bytes=32 time=3ms TTL=126
+Reply from 10.102.109.40: bytes=32 time=4ms TTL=126
+Reply from 10.102.109.40: bytes=32 time=2ms TTL=126
+Reply from 10.102.109.40: bytes=32 time=2ms TTL=126
+Reply from 10.102.109.40: bytes=32 time=2ms TTL=126
+
+Ping statistics for 10.102.109.40:
+    Packets: Sent = 5, Received = 5, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 2ms, Maximum = 4ms, Average = 2ms
+==========Beginning test to Selma Carlson Database==========
+Beginning test 20mb over 4 files.
+Environment:
+DRS_HTTPSERVER: 172.17.200.90/DRPacs
+DRSYSCFG:       C:\DRS\Guest\Guest490.ini
+
+Running arguments:
+C:\DRS\Sys\Sysx86\CopyServerFileTest.exe
+imaging.selmacarlson.com/drpacs
+
+Setting up...
+Logging in...
+DRHttpClientSetup completes setup
+Application Login Success
+
+Creating files....
+
+Files in directory: 2
+Directory size: 10.00 MB, 80.00 Mbits
+
+Posting directory files to DRS_HTTPSERVER: imaging.selmacarlson.com DIRECTORY: DRS\TEMP\CpyTestPOST\
+from LOCAL: C:\DRS\TEMP\
+..
+Posting Files Succeeded
+
+Seconds to Post File: 0.4224s
+Post Directory rate: 4.735 files/sec
+                     23.674 MB/sec, 189.391 Mbits/sec
+
+Downloading directory files from DRS_HTTPSERVER: imaging.selmacarlson.com DIRECTORY: DRS\TEMP\CpyTestPOST\
+to LOCAL: C:\DRS\TEMP\CpyTestDOWNLOAD\
+..
+Downloading Files Succeeded
+
+Seconds to Download File: 0.7527s
+Download Directory rate: 2.657 files/sec
+                         13.286 MB/sec, 106.290 Mbits/sec
+
+Total seconds to Post and Download: 1.1780s
+
+Clean up:
+Deleted 2 files
+Conducting 5 ping test to Image Server
+
+Pinging imaging.selmacarlson.com [10.102.109.23] with 32 bytes of data:
+Reply from 10.102.109.23: bytes=32 time=2ms TTL=126
+Reply from 10.102.109.23: bytes=32 time=2ms TTL=126
+Reply from 10.102.109.23: bytes=32 time=3ms TTL=126
+Reply from 10.102.109.23: bytes=32 time=2ms TTL=126
+Reply from 10.102.109.23: bytes=32 time=2ms TTL=126
+
+Ping statistics for 10.102.109.23:
+    Packets: Sent = 5, Received = 5, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 2ms, Maximum = 3ms, Average = 2ms
+Beginning test 20mb over 4 files.
+Environment:
+DRS_HTTPSERVER: 172.17.200.90/DRPacs
+DRSYSCFG:       C:\DRS\Guest\Guest490.ini
+
+Running arguments:
+C:\DRS\Sys\Sysx86\CopyServerFileTest.exe
+10.102.109.14/drpacs
+
+Setting up...
+Logging in...
+DRHttpClientSetup completes setup
+Application Login Success
+
+Creating files....
+
+Files in directory: 2
+Directory size: 10.00 MB, 80.00 Mbits
+
+Posting directory files to DRS_HTTPSERVER: 10.102.109.14 DIRECTORY: DRS\TEMP\CpyTestPOST\
+from LOCAL: C:\DRS\TEMP\
+..
+Posting Files Succeeded
+
+Seconds to Post File: 2.6188s
+Post Directory rate: 0.764 files/sec
+                     3.819 MB/sec, 30.549 Mbits/sec
+
+Downloading directory files from DRS_HTTPSERVER: 10.102.109.14 DIRECTORY: DRS\TEMP\CpyTestPOST\
+to LOCAL: C:\DRS\TEMP\CpyTestDOWNLOAD\
+..
+Downloading Files Succeeded
+
+Seconds to Download File: 2.3897s
+Download Directory rate: 0.837 files/sec
+                         4.185 MB/sec, 33.477 Mbits/sec
+
+Total seconds to Post and Download: 5.0141s
+
+Clean up:
+Deleted 2 files
+Conducting 5 ping test to Image Server
+
+Pinging 10.102.109.14 with 32 bytes of data:
+Reply from 10.102.109.14: bytes=32 time=18ms TTL=125
+Reply from 10.102.109.14: bytes=32 time=3ms TTL=125
+Reply from 10.102.109.14: bytes=32 time=3ms TTL=125
+Reply from 10.102.109.14: bytes=32 time=3ms TTL=125
+Reply from 10.102.109.14: bytes=32 time=3ms TTL=125
+
+Ping statistics for 10.102.109.14:
+    Packets: Sent = 5, Received = 5, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 3ms, Maximum = 18ms, Average = 6ms
+Beginning test 20mb over 4 files.
+Environment:
+DRS_HTTPSERVER: 172.17.200.90/DRPacs
+DRSYSCFG:       C:\DRS\Guest\Guest490.ini
+
+Running arguments:
+C:\DRS\Sys\Sysx86\CopyServerFileTest.exe
+10.102.109.23/DRPacs
+
+Setting up...
+Logging in...
+DRHttpClientSetup completes setup
+Application Login Success
+
+Creating files....
+
+Files in directory: 4
+Directory size: 20.00 MB, 160.00 Mbits
+
+Posting directory files to DRS_HTTPSERVER: 10.102.109.23 DIRECTORY: DRS\TEMP\CpyTestPOST\
+from LOCAL: C:\DRS\TEMP\
+....
+Posting Files Succeeded
+
+Seconds to Post File: 0.8014s
+Post Directory rate: 4.991 files/sec
+                     24.955 MB/sec, 199.644 Mbits/sec
+
+Downloading directory files from DRS_HTTPSERVER: 10.102.109.23 DIRECTORY: DRS\TEMP\CpyTestPOST\
+to LOCAL: C:\DRS\TEMP\CpyTestDOWNLOAD\
+....
+Downloading Files Succeeded
+
+Seconds to Download File: 0.8277s
+Download Directory rate: 4.833 files/sec
+                         24.164 MB/sec, 193.311 Mbits/sec
+
+Total seconds to Post and Download: 1.6322s
+
+Clean up:
+Deleted 4 files
+Conducting 5 ping test to Image Server
+
+Pinging 10.102.109.23 with 32 bytes of data:
+Reply from 10.102.109.23: bytes=32 time=2ms TTL=126
+Reply from 10.102.109.23: bytes=32 time=2ms TTL=126
+Reply from 10.102.109.23: bytes=32 time=2ms TTL=126
+Reply from 10.102.109.23: bytes=32 time=2ms TTL=126
+Reply from 10.102.109.23: bytes=32 time=3ms TTL=126
+
+Ping statistics for 10.102.109.23:
+    Packets: Sent = 5, Received = 5, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 2ms, Maximum = 3ms, Average = 2ms
+==========Beginning test to Twin Cities Database==========
+Beginning test 20mb over 4 files.
+Environment:
+DRS_HTTPSERVER: 172.17.200.90/DRPacs
+DRSYSCFG:       C:\DRS\Guest\Guest490.ini
+
+Running arguments:
+C:\DRS\Sys\Sysx86\CopyServerFileTest.exe
+imaging.twincitieshospital.com/drpacs
+
+Setting up...
+Logging in...
+DRHttpClientSetup completes setup
+Application Login Success
+
+Creating files....
+
+Files in directory: 2
+Directory size: 10.00 MB, 80.00 Mbits
+
+Posting directory files to DRS_HTTPSERVER: imaging.twincitieshospital.com DIRECTORY: DRS\TEMP\CpyTestPOST\
+from LOCAL: C:\DRS\TEMP\
+..
+Posting Files Succeeded
+
+Seconds to Post File: 0.8156s
+Post Directory rate: 2.452 files/sec
+                     12.261 MB/sec, 98.090 Mbits/sec
+
+Downloading directory files from DRS_HTTPSERVER: imaging.twincitieshospital.com DIRECTORY: DRS\TEMP\CpyTestPOST\
+to LOCAL: C:\DRS\TEMP\CpyTestDOWNLOAD\
+..
+Downloading Files Succeeded
+
+Seconds to Download File: 0.6239s
+Download Directory rate: 3.206 files/sec
+                         16.028 MB/sec, 128.228 Mbits/sec
+
+Total seconds to Post and Download: 1.4424s
+
+Clean up:
+Deleted 2 files
+Conducting 5 ping test to Image Server
+
+Pinging imaging.twincitieshospital.com [10.102.109.80] with 32 bytes of data:
+Reply from 10.102.109.80: bytes=32 time=4ms TTL=125
+Reply from 10.102.109.80: bytes=32 time=4ms TTL=125
+Reply from 10.102.109.80: bytes=32 time=4ms TTL=125
+Reply from 10.102.109.80: bytes=32 time=4ms TTL=125
+Reply from 10.102.109.80: bytes=32 time=4ms TTL=125
+
+Ping statistics for 10.102.109.80:
+    Packets: Sent = 5, Received = 5, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 4ms, Maximum = 4ms, Average = 4ms
+Beginning test 20mb over 4 files.
+Environment:
+DRS_HTTPSERVER: 172.17.200.90/DRPacs
+DRSYSCFG:       C:\DRS\Guest\Guest490.ini
+
+Running arguments:
+C:\DRS\Sys\Sysx86\CopyServerFileTest.exe
+10.102.109.81/drpacs
+
+Setting up...
+Logging in...
+DRHttpClientSetup completes setup
+Application Login Success
+
+Creating files....
+
+Files in directory: 2
+Directory size: 10.00 MB, 80.00 Mbits
+
+Posting directory files to DRS_HTTPSERVER: 10.102.109.81 DIRECTORY: DRS\TEMP\CpyTestPOST\
+from LOCAL: C:\DRS\TEMP\
+..
+Posting Files Succeeded
+
+Seconds to Post File: 0.7342s
+Post Directory rate: 2.724 files/sec
+                     13.621 MB/sec, 108.969 Mbits/sec
+
+Downloading directory files from DRS_HTTPSERVER: 10.102.109.81 DIRECTORY: DRS\TEMP\CpyTestPOST\
+to LOCAL: C:\DRS\TEMP\CpyTestDOWNLOAD\
+..
+Downloading Files Succeeded
+
+Seconds to Download File: 0.7042s
+Download Directory rate: 2.840 files/sec
+                         14.200 MB/sec, 113.602 Mbits/sec
+
+Total seconds to Post and Download: 1.4414s
+
+Clean up:
+Deleted 2 files
+Conducting 5 ping test to Image Server
+
+Pinging 10.102.109.81 with 32 bytes of data:
+Reply from 10.102.109.81: bytes=32 time=4ms TTL=125
+Reply from 10.102.109.81: bytes=32 time=4ms TTL=125
+Reply from 10.102.109.81: bytes=32 time=4ms TTL=125
+Reply from 10.102.109.81: bytes=32 time=4ms TTL=125
+Reply from 10.102.109.81: bytes=32 time=4ms TTL=125
+
+Ping statistics for 10.102.109.81:
+    Packets: Sent = 5, Received = 5, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 4ms, Maximum = 4ms, Average = 4ms
+Beginning test 20mb over 4 files.
+Environment:
+DRS_HTTPSERVER: 172.17.200.90/DRPacs
+DRSYSCFG:       C:\DRS\Guest\Guest490.ini
+
+Running arguments:
+C:\DRS\Sys\Sysx86\CopyServerFileTest.exe
+10.102.109.80/drpacs
+
+Setting up...
+Logging in...
+DRHttpClientSetup completes setup
+Application Login Success
+
+Creating files....
+
+Files in directory: 2
+Directory size: 10.00 MB, 80.00 Mbits
+
+Posting directory files to DRS_HTTPSERVER: 10.102.109.80 DIRECTORY: DRS\TEMP\CpyTestPOST\
+from LOCAL: C:\DRS\TEMP\
+..
+Posting Files Succeeded
+
+Seconds to Post File: 0.8151s
+Post Directory rate: 2.454 files/sec
+                     12.268 MB/sec, 98.145 Mbits/sec
+
+Downloading directory files from DRS_HTTPSERVER: 10.102.109.80 DIRECTORY: DRS\TEMP\CpyTestPOST\
+to LOCAL: C:\DRS\TEMP\CpyTestDOWNLOAD\
+..
+Downloading Files Succeeded
+
+Seconds to Download File: 0.5517s
+Download Directory rate: 3.625 files/sec
+                         18.127 MB/sec, 145.016 Mbits/sec
+
+Total seconds to Post and Download: 1.3700s
+
+Clean up:
+Deleted 2 files
+Conducting 5 ping test to Image Server
+
+Pinging 10.102.109.80 with 32 bytes of data:
+Reply from 10.102.109.80: bytes=32 time=4ms TTL=125
+Reply from 10.102.109.80: bytes=32 time=4ms TTL=125
+Reply from 10.102.109.80: bytes=32 time=5ms TTL=125
+Reply from 10.102.109.80: bytes=32 time=4ms TTL=125
+Reply from 10.102.109.80: bytes=32 time=4ms TTL=125
+
+Ping statistics for 10.102.109.80:
+    Packets: Sent = 5, Received = 5, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 4ms, Maximum = 5ms, Average = 4ms
+==========Beginning test to French Database==========
+Beginning test 20mb over 4 files.
+Environment:
+DRS_HTTPSERVER: 172.17.200.90/DRPacs
+DRSYSCFG:       C:\DRS\Guest\Guest490.ini
+
+Running arguments:
+C:\DRS\Sys\Sysx86\CopyServerFileTest.exe
+fhmczda.dignityhealth.org/drpacs
+
+Setting up...
+Logging in...
+DRHttpClientSetup completes setup
+Application Login Success
+
+Creating files....
+
+Files in directory: 2
+Directory size: 10.00 MB, 80.00 Mbits
+
+Posting directory files to DRS_HTTPSERVER: fhmczda.dignityhealth.org DIRECTORY: DRS\TEMP\CpyTestPOST\
+from LOCAL: C:\DRS\TEMP\
+..
+Posting Files Succeeded
+
+Seconds to Post File: 0.4579s
+Post Directory rate: 4.368 files/sec
+                     21.840 MB/sec, 174.718 Mbits/sec
+
+Downloading directory files from DRS_HTTPSERVER: fhmczda.dignityhealth.org DIRECTORY: DRS\TEMP\CpyTestPOST\
+to LOCAL: C:\DRS\TEMP\CpyTestDOWNLOAD\
+..
+Downloading Files Succeeded
+
+Seconds to Download File: 0.5401s
+Download Directory rate: 3.703 files/sec
+                         18.516 MB/sec, 148.131 Mbits/sec
+
+Total seconds to Post and Download: 1.0006s
+
+Clean up:
+Deleted 2 files
+Conducting 5 ping test to Image Server
+
+Pinging fhmczda.dignityhealth.org [10.208.200.116] with 32 bytes of data:
+Reply from 10.208.200.116: bytes=32 time=5ms TTL=122
+Reply from 10.208.200.116: bytes=32 time=5ms TTL=122
+Reply from 10.208.200.116: bytes=32 time=5ms TTL=122
+Reply from 10.208.200.116: bytes=32 time=5ms TTL=122
+Reply from 10.208.200.116: bytes=32 time=5ms TTL=122
+
+Ping statistics for 10.208.200.116:
+    Packets: Sent = 5, Received = 5, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 5ms, Maximum = 5ms, Average = 5ms
+Beginning test 20mb over 4 files.
+Environment:
+DRS_HTTPSERVER: 172.17.200.90/DRPacs
+DRSYSCFG:       C:\DRS\Guest\Guest490.ini
+
+Running arguments:
+C:\DRS\Sys\Sysx86\CopyServerFileTest.exe
+10.208.200.119/drpacs
+
+Setting up...
+Logging in...
+DRHttpClientSetup completes setup
+Conducting 5 ping test to Image Server
+
+Pinging 10.208.200.119 with 32 bytes of data:
+Reply from 10.208.200.119: bytes=32 time=5ms TTL=122
+Reply from 10.208.200.119: bytes=32 time=5ms TTL=122
+Reply from 10.208.200.119: bytes=32 time=5ms TTL=122
+Reply from 10.208.200.119: bytes=32 time=5ms TTL=122
+Reply from 10.208.200.119: bytes=32 time=5ms TTL=122
+
+Ping statistics for 10.208.200.119:
+    Packets: Sent = 5, Received = 5, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 5ms, Maximum = 5ms, Average = 5ms
+Beginning test 20mb over 4 files.
+Environment:
+DRS_HTTPSERVER: 172.17.200.90/DRPacs
+DRSYSCFG:       C:\DRS\Guest\Guest490.ini
+
+Running arguments:
+C:\DRS\Sys\Sysx86\CopyServerFileTest.exe
+10.208.200.116/DRPacs
+
+Setting up...
+Logging in...
+DRHttpClientSetup completes setup
+Application Login Success
+
+Creating files....
+
+Files in directory: 4
+Directory size: 20.00 MB, 160.00 Mbits
+
+Posting directory files to DRS_HTTPSERVER: 10.208.200.116 DIRECTORY: DRS\TEMP\CpyTestPOST\
+from LOCAL: C:\DRS\TEMP\
+....
+Posting Files Succeeded
+
+Seconds to Post File: 0.8445s
+Post Directory rate: 4.736 files/sec
+                     23.682 MB/sec, 189.456 Mbits/sec
+
+Downloading directory files from DRS_HTTPSERVER: 10.208.200.116 DIRECTORY: DRS\TEMP\CpyTestPOST\
+to LOCAL: C:\DRS\TEMP\CpyTestDOWNLOAD\
+....
+Downloading Files Succeeded
+
+Seconds to Download File: 0.9564s
+Download Directory rate: 4.182 files/sec
+                         20.911 MB/sec, 167.287 Mbits/sec
+
+Total seconds to Post and Download: 1.8037s
+
+Clean up:
+Deleted 4 files
+Conducting 5 ping test to Image Server
+
+Pinging 10.208.200.116 with 32 bytes of data:
+Reply from 10.208.200.116: bytes=32 time=5ms TTL=122
+Reply from 10.208.200.116: bytes=32 time=4ms TTL=122
+Reply from 10.208.200.116: bytes=32 time=5ms TTL=122
+Reply from 10.208.200.116: bytes=32 time=5ms TTL=122
+Reply from 10.208.200.116: bytes=32 time=5ms TTL=122
+
+Ping statistics for 10.208.200.116:
+    Packets: Sent = 5, Received = 5, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 4ms, Maximum = 5ms, Average = 4ms
+==========Beginning test to Arroyo Grande Database==========
+Beginning test 20mb over 4 files.
+Environment:
+DRS_HTTPSERVER: 172.17.200.90/DRPacs
+DRSYSCFG:       C:\DRS\Guest\Guest490.ini
+
+Running arguments:
+C:\DRS\Sys\Sysx86\CopyServerFileTest.exe
+agchzda.dignityhealth.org/drpacs
+
+Setting up...
+Logging in...
+DRHttpClientSetup completes setup
+Application Login Success
+
+Creating files....
+
+Files in directory: 2
+Directory size: 10.00 MB, 80.00 Mbits
+
+Posting directory files to DRS_HTTPSERVER: agchzda.dignityhealth.org DIRECTORY: DRS\TEMP\CpyTestPOST\
+from LOCAL: C:\DRS\TEMP\
+..
+Posting Files Succeeded
+
+Seconds to Post File: 0.5201s
+Post Directory rate: 3.846 files/sec
+                     19.228 MB/sec, 153.820 Mbits/sec
+
+Downloading directory files from DRS_HTTPSERVER: agchzda.dignityhealth.org DIRECTORY: DRS\TEMP\CpyTestPOST\
+to LOCAL: C:\DRS\TEMP\CpyTestDOWNLOAD\
+..
+Downloading Files Succeeded
+
+Seconds to Download File: 0.8234s
+Download Directory rate: 2.429 files/sec
+                         12.145 MB/sec, 97.163 Mbits/sec
+
+Total seconds to Post and Download: 1.3477s
+
+Clean up:
+Deleted 2 files
+Conducting 5 ping test to Image Server
+
+Pinging agchzda.dignityhealth.org [10.208.200.27] with 32 bytes of data:
+Reply from 10.208.200.27: bytes=32 time=5ms TTL=122
+Reply from 10.208.200.27: bytes=32 time=5ms TTL=122
+Reply from 10.208.200.27: bytes=32 time=33ms TTL=122
+Reply from 10.208.200.27: bytes=32 time=5ms TTL=122
+Reply from 10.208.200.27: bytes=32 time=5ms TTL=122
+
+Ping statistics for 10.208.200.27:
+    Packets: Sent = 5, Received = 5, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 5ms, Maximum = 33ms, Average = 10ms
+Beginning test 20mb over 4 files.
+Environment:
+DRS_HTTPSERVER: 172.17.200.90/DRPacs
+DRSYSCFG:       C:\DRS\Guest\Guest490.ini
+
+Running arguments:
+C:\DRS\Sys\Sysx86\CopyServerFileTest.exe
+10.208.200.42/drpacs
+
+Setting up...
+Logging in...
+DRHttpClientSetup completes setup
+Conducting 5 ping test to Image Server
+
+Pinging 10.208.200.42 with 32 bytes of data:
+Reply from 10.208.200.42: bytes=32 time=5ms TTL=122
+Reply from 10.208.200.42: bytes=32 time=5ms TTL=122
+Reply from 10.208.200.42: bytes=32 time=5ms TTL=122
+Reply from 10.208.200.42: bytes=32 time=5ms TTL=122
+Reply from 10.208.200.42: bytes=32 time=5ms TTL=122
+
+Ping statistics for 10.208.200.42:
+    Packets: Sent = 5, Received = 5, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 5ms, Maximum = 5ms, Average = 5ms
+Beginning test 20mb over 4 files.
+Environment:
+DRS_HTTPSERVER: 172.17.200.90/DRPacs
+DRSYSCFG:       C:\DRS\Guest\Guest490.ini
+
+Running arguments:
+C:\DRS\Sys\Sysx86\CopyServerFileTest.exe
+10.208.200.27/drpacs
+
+Setting up...
+Logging in...
+DRHttpClientSetup completes setup
+Application Login Success
+
+Creating files....
+
+Files in directory: 2
+Directory size: 10.00 MB, 80.00 Mbits
+
+Posting directory files to DRS_HTTPSERVER: 10.208.200.27 DIRECTORY: DRS\TEMP\CpyTestPOST\
+from LOCAL: C:\DRS\TEMP\
+..
+Posting Files Succeeded
+
+Seconds to Post File: 0.4625s
+Post Directory rate: 4.324 files/sec
+                     21.620 MB/sec, 172.964 Mbits/sec
+
+Downloading directory files from DRS_HTTPSERVER: 10.208.200.27 DIRECTORY: DRS\TEMP\CpyTestPOST\
+to LOCAL: C:\DRS\TEMP\CpyTestDOWNLOAD\
+..
+Downloading Files Succeeded
+
+Seconds to Download File: 0.4239s
+Download Directory rate: 4.718 files/sec
+                         23.590 MB/sec, 188.719 Mbits/sec
+
+Total seconds to Post and Download: 0.8931s
+
+Clean up:
+Deleted 2 files
+Conducting 5 ping test to Image Server
+
+Pinging 10.208.200.27 with 32 bytes of data:
+Reply from 10.208.200.27: bytes=32 time=13ms TTL=122
+Reply from 10.208.200.27: bytes=32 time=9ms TTL=122
+Reply from 10.208.200.27: bytes=32 time=5ms TTL=122
+Reply from 10.208.200.27: bytes=32 time=6ms TTL=122
+Reply from 10.208.200.27: bytes=32 time=5ms TTL=122
+
+Ping statistics for 10.208.200.27:
+    Packets: Sent = 5, Received = 5, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 5ms, Maximum = 13ms, Average = 7ms
+==========Beginning test Marian Database==========
+Beginning test 20mb over 4 files.
+Environment:
+DRS_HTTPSERVER: 172.17.200.90/DRPacs
+DRSYSCFG:       C:\DRS\Guest\Guest490.ini
+
+Running arguments:
+C:\DRS\Sys\Sysx86\CopyServerFileTest.exe
+mrmczda.dignityhealth.org/drpacs
+
+Setting up...
+Logging in...
+DRHttpClientSetup completes setup
+Application Login Success
+
+Creating files....
+
+Files in directory: 2
+Directory size: 10.00 MB, 80.00 Mbits
+
+Posting directory files to DRS_HTTPSERVER: mrmczda.dignityhealth.org DIRECTORY: DRS\TEMP\CpyTestPOST\
+from LOCAL: C:\DRS\TEMP\
+..
+Posting Files Succeeded
+
+Seconds to Post File: 1.3528s
+Post Directory rate: 1.478 files/sec
+                     7.392 MB/sec, 59.138 Mbits/sec
+
+Downloading directory files from DRS_HTTPSERVER: mrmczda.dignityhealth.org DIRECTORY: DRS\TEMP\CpyTestPOST\
+to LOCAL: C:\DRS\TEMP\CpyTestDOWNLOAD\
+..
+Downloading Files Succeeded
+
+Seconds to Download File: 0.9548s
+Download Directory rate: 2.095 files/sec
+                         10.473 MB/sec, 83.786 Mbits/sec
+
+Total seconds to Post and Download: 2.3108s
+
+Clean up:
+Deleted 2 files
+Conducting 5 ping test to Image Server
+
+Pinging mrmczda.dignityhealth.org [10.212.200.80] with 32 bytes of data:
+Reply from 10.212.200.80: bytes=32 time=6ms TTL=122
+Reply from 10.212.200.80: bytes=32 time=5ms TTL=122
+Reply from 10.212.200.80: bytes=32 time=5ms TTL=122
+Reply from 10.212.200.80: bytes=32 time=5ms TTL=122
+Reply from 10.212.200.80: bytes=32 time=5ms TTL=122
+
+Ping statistics for 10.212.200.80:
+    Packets: Sent = 5, Received = 5, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 5ms, Maximum = 6ms, Average = 5ms
+Beginning test 20mb over 4 files.
+Environment:
+DRS_HTTPSERVER: 172.17.200.90/DRPacs
+DRSYSCFG:       C:\DRS\Guest\Guest490.ini
+
+Running arguments:
+C:\DRS\Sys\Sysx86\CopyServerFileTest.exe
+10.212.200.90/drpacs
+
+Setting up...
+Logging in...
+DRHttpClientSetup completes setup
+Conducting 5 ping test to Image Server
+
+Pinging 10.212.200.90 with 32 bytes of data:
+Reply from 10.212.200.90: bytes=32 time=5ms TTL=122
+Reply from 10.212.200.90: bytes=32 time=6ms TTL=122
+Reply from 10.212.200.90: bytes=32 time=5ms TTL=122
+Reply from 10.212.200.90: bytes=32 time=5ms TTL=122
+Reply from 10.212.200.90: bytes=32 time=5ms TTL=122
+
+Ping statistics for 10.212.200.90:
+    Packets: Sent = 5, Received = 5, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 5ms, Maximum = 6ms, Average = 5ms
+Beginning test 20mb over 4 files.
+Environment:
+DRS_HTTPSERVER: 172.17.200.90/DRPacs
+DRSYSCFG:       C:\DRS\Guest\Guest490.ini
+
+Running arguments:
+C:\DRS\Sys\Sysx86\CopyServerFileTest.exe
+10.212.200.80/drpacs
+
+Setting up...
+Logging in...
+DRHttpClientSetup completes setup
+Application Login Success
+
+Creating files....
+
+Files in directory: 2
+Directory size: 10.00 MB, 80.00 Mbits
+
+Posting directory files to DRS_HTTPSERVER: 10.212.200.80 DIRECTORY: DRS\TEMP\CpyTestPOST\
+from LOCAL: C:\DRS\TEMP\
+..
+Posting Files Succeeded
+
+Seconds to Post File: 0.4333s
+Post Directory rate: 4.616 files/sec
+                     23.078 MB/sec, 184.627 Mbits/sec
+
+Downloading directory files from DRS_HTTPSERVER: 10.212.200.80 DIRECTORY: DRS\TEMP\CpyTestPOST\
+to LOCAL: C:\DRS\TEMP\CpyTestDOWNLOAD\
+..
+Downloading Files Succeeded
+
+Seconds to Download File: 0.5650s
+Download Directory rate: 3.540 files/sec
+                         17.698 MB/sec, 141.586 Mbits/sec
+
+Total seconds to Post and Download: 1.0010s
+
+Clean up:
+Deleted 2 files
+Conducting 5 ping test to Image Server
+
+Pinging 10.212.200.80 with 32 bytes of data:
+Reply from 10.212.200.80: bytes=32 time=5ms TTL=122
+Reply from 10.212.200.80: bytes=32 time=5ms TTL=122
+Reply from 10.212.200.80: bytes=32 time=5ms TTL=122
+Reply from 10.212.200.80: bytes=32 time=5ms TTL=122
+Reply from 10.212.200.80: bytes=32 time=6ms TTL=122
+
+Ping statistics for 10.212.200.80:
+    Packets: Sent = 5, Received = 5, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 5ms, Maximum = 6ms, Average = 5ms
+Tuesday, November 12, 2024 3:41:19 PM
+==========End of Test==========
+**********************
+Windows PowerShell transcript end
+End time: 20241112154119
+**********************

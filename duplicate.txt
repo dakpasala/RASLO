@@ -1,0 +1,24 @@
+Use this if you want to remove duplicates from the Supabase Database
+WITH duplicates AS (
+  SELECT
+    id,
+    ROW_NUMBER() OVER (
+      PARTITION BY
+        "Region",
+        "Timestamp",
+        "Post_Time_Seconds",
+        "Download_Time_Seconds",
+        "Post_Rate_Files_per_Sec",
+        "Download_Rate_Files_per_Sec",
+        "Post_Rate_MB_per_Sec",
+        "Post_Rate_Mbits_per_Sec",
+        "Download_Rate_MB_per_Sec",
+        "Download_Rate_Mbits_per_Sec"
+      ORDER BY id
+    ) AS rn
+  FROM
+    speeds
+)
+DELETE FROM speeds
+USING duplicates
+WHERE speeds.id = duplicates.id AND duplicates.rn > 1;
