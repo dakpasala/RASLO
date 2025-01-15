@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { signIn, getUser } from '../supabaseClient';
+import { signIn, getUser } from '../api/supabaseClient';
 import { useRouter } from 'next/router';
 
 export default function Home() {
