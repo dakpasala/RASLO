@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { signIn, getUser } from '../api/supabaseClient';
 import { useRouter } from 'next/router';
 
+
 export default function Home() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
