@@ -28,12 +28,9 @@ export default function Home() {
       }
   
       if (data?.user) {
-        if (data?.user) {
-          // Create a session cookie without expiration to ensure it is forgotten when the browser is closed
-          document.cookie = 'x-allow-login=true; path=/;';
-          console.log('Session cookie set. It will be cleared when the browser is closed.');
-          router.push('/stats');
-        }        
+        // Set a temporary cookie to bypass middleware session check
+        document.cookie = 'x-allow-login=true; path=/; max-age=100'; // Allow for 10 seconds
+        router.push('/stats');
       } else {
         setErrorMessage('Login failed. Please try again.');
         setIsLoading(false);
