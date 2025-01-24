@@ -1,0 +1,225 @@
+-----------------------------------------------------------
+Server listening on 5201 (test #3)
+-----------------------------------------------------------
+Time: Fri, 24 Jan 2025 19:43:17 GMT
+Accepted connection from ::1, port 54743
+      Cookie: db5s4mwddgdbnzujovmj3tw7wta3hm3xhlr6
+      TCP MSS: 0 (default)
+[  6] local ::1 port 5201 connected to ::1 port 54744
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 10 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.01   sec  6.37 GBytes  54.2 Gbits/sec                  
+[  6]   1.01-2.01   sec  6.53 GBytes  56.3 Gbits/sec                  
+[  6]   2.01-3.01   sec  6.48 GBytes  55.5 Gbits/sec                  
+[  6]   3.01-4.00   sec  6.16 GBytes  53.2 Gbits/sec                  
+[  6]   4.00-5.01   sec  6.49 GBytes  55.2 Gbits/sec                  
+[  6]   5.01-6.01   sec  6.41 GBytes  55.3 Gbits/sec                  
+[  6]   6.01-7.01   sec  6.40 GBytes  55.1 Gbits/sec                  
+[  6]   7.01-8.01   sec  6.27 GBytes  53.5 Gbits/sec                  
+[  6]   8.01-9.01   sec  6.57 GBytes  56.8 Gbits/sec                  
+[  6]   9.01-10.00  sec  6.76 GBytes  58.4 Gbits/sec                  
+[  6]  10.00-10.00  sec   384 KBytes  11.3 Gbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6] (sender statistics not available)
+[  6]   0.00-10.00  sec  64.4 GBytes  55.3 Gbits/sec                  receiver
+iperf 3.18
+CYGWIN_NT-10.0-22631 DESKTOP-K6LV5E 3.5.4-1.x86_64 2024-08-25 16:52 UTC x86_64
+-----------------------------------------------------------
+Server listening on 5201 (test #4)
+-----------------------------------------------------------
+Time: Fri, 24 Jan 2025 19:43:35 GMT
+Accepted connection from ::1, port 54749
+      Cookie: 5n7szzixeydytgerbtv2zispk7de744fjti4
+      TCP MSS: 0 (default)
+[  6] local ::1 port 5201 connected to ::1 port 54750
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 10 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.01   sec  6.68 GBytes  56.7 Gbits/sec                  
+[  6]   1.01-2.01   sec  6.69 GBytes  57.5 Gbits/sec                  
+[  6]   2.01-3.01   sec  6.60 GBytes  57.1 Gbits/sec                  
+[  6]   3.01-4.00   sec  6.66 GBytes  57.2 Gbits/sec                  
+[  6]   4.00-5.01   sec  6.77 GBytes  57.6 Gbits/sec                  
+[  6]   5.01-6.01   sec  6.64 GBytes  57.2 Gbits/sec                  
+[  6]   6.01-7.01   sec  6.63 GBytes  57.2 Gbits/sec                  
+[  6]   7.01-8.00   sec  6.66 GBytes  57.4 Gbits/sec                  
+[  6]   8.00-9.01   sec  6.76 GBytes  57.4 Gbits/sec                  
+[  6]   9.01-10.00  sec  6.55 GBytes  56.9 Gbits/sec                  
+[  6]  10.00-10.00  sec   768 KBytes  37.9 Gbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-10.00  sec  66.6 GBytes  57.2 Gbits/sec                  sender
+[  6] (receiver statistics not available)
+CPU Utilization: local/sender 18.6% (0.6%u/18.0%s), remote/receiver 19.4% (0.1%u/19.2%s)
+iperf 3.18
+CYGWIN_NT-10.0-22631 DESKTOP-K6LV5E 3.5.4-1.x86_64 2024-08-25 16:52 UTC x86_64
+-----------------------------------------------------------
+Server listening on 5201 (test #5)
+-----------------------------------------------------------
+Time: Fri, 24 Jan 2025 19:43:49 GMT
+Accepted connection from ::1, port 54752
+      Cookie: jtfz7bvrsvl3vqqkd3g5gbmyio5a4ftp66jt
+      TCP MSS: 0 (default)
+[  6] local ::1 port 5201 connected to ::1 port 54753
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 10 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.01   sec  6.77 GBytes  57.5 Gbits/sec                  
+[  6]   1.01-2.01   sec  6.71 GBytes  58.0 Gbits/sec                  
+[  6]   2.01-3.01   sec  6.76 GBytes  58.1 Gbits/sec                  
+[  6]   3.01-4.01   sec  6.71 GBytes  57.1 Gbits/sec                  
+[  6]   4.01-5.01   sec  6.79 GBytes  58.4 Gbits/sec                  
+[  6]   5.01-6.01   sec  6.77 GBytes  58.2 Gbits/sec                  
+[  6]   6.01-7.01   sec  6.75 GBytes  58.4 Gbits/sec                  
+[  6]   7.01-8.00   sec  6.62 GBytes  57.2 Gbits/sec                  
+[  6]   8.00-9.01   sec  6.78 GBytes  57.7 Gbits/sec                  
+[  6]   9.01-10.01  sec  6.72 GBytes  57.9 Gbits/sec                  
+[  6]  10.01-10.01  sec   256 KBytes  9.66 Gbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6] (sender statistics not available)
+[  6]   0.00-10.01  sec  67.4 GBytes  57.8 Gbits/sec                  receiver
+iperf 3.18
+CYGWIN_NT-10.0-22631 DESKTOP-K6LV5E 3.5.4-1.x86_64 2024-08-25 16:52 UTC x86_64
+-----------------------------------------------------------
+Server listening on 5201 (test #6)
+-----------------------------------------------------------
+Time: Fri, 24 Jan 2025 19:44:03 GMT
+Accepted connection from ::1, port 54755
+      Cookie: x3lwrs544yaeluyvura7uftpu5a3eze5zxb7
+      TCP MSS: 0 (default)
+[  6] local ::1 port 5201 connected to ::1 port 54756
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 10 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.01   sec  6.86 GBytes  58.2 Gbits/sec                  
+[  6]   1.01-2.01   sec  6.78 GBytes  58.3 Gbits/sec                  
+[  6]   2.01-3.01   sec  6.68 GBytes  57.6 Gbits/sec                  
+[  6]   3.01-4.00   sec  6.79 GBytes  58.5 Gbits/sec                  
+[  6]   4.00-5.00   sec  6.81 GBytes  58.5 Gbits/sec                  
+[  6]   5.00-6.01   sec  6.67 GBytes  56.9 Gbits/sec                  
+[  6]   6.01-7.00   sec  6.74 GBytes  58.2 Gbits/sec                  
+[  6]   7.00-8.01   sec  6.87 GBytes  58.6 Gbits/sec                  
+[  6]   8.01-9.00   sec  6.66 GBytes  57.6 Gbits/sec                  
+[  6]   9.00-10.00  sec  6.75 GBytes  58.1 Gbits/sec                  
+[  6]  10.00-10.02  sec   105 MBytes  58.5 Gbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-10.02  sec  67.7 GBytes  58.1 Gbits/sec                  sender
+[  6] (receiver statistics not available)
+CPU Utilization: local/sender 9.2% (0.2%u/9.1%s), remote/receiver 9.3% (0.1%u/9.2%s)
+iperf 3.18
+CYGWIN_NT-10.0-22631 DESKTOP-K6LV5E 3.5.4-1.x86_64 2024-08-25 16:52 UTC x86_64
+-----------------------------------------------------------
+Server listening on 5201 (test #7)
+-----------------------------------------------------------
+Time: Fri, 24 Jan 2025 19:44:26 GMT
+Accepted connection from 193.128.1.11, port 60462
+      Cookie: 2lmrabn6tp4nja3sv7q3ccpdmjzinin4uk4e
+      TCP MSS: 0 (default)
+[  6] local 193.128.1.13 port 5201 connected to 193.128.1.11 port 60463
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 10 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.00   sec  6.25 MBytes  52.3 Mbits/sec                  
+[  6]   1.00-2.00   sec  8.12 MBytes  68.0 Mbits/sec                  
+[  6]   2.00-3.01   sec  8.75 MBytes  72.9 Mbits/sec                  
+[  6]   3.01-4.01   sec  9.00 MBytes  75.4 Mbits/sec                  
+[  6]   4.01-5.01   sec  9.12 MBytes  76.6 Mbits/sec                  
+[  6]   5.01-6.01   sec  6.88 MBytes  57.8 Mbits/sec                  
+[  6]   6.01-7.01   sec  8.88 MBytes  74.3 Mbits/sec                  
+[  6]   7.01-8.01   sec  9.25 MBytes  77.6 Mbits/sec                  
+[  6]   8.01-9.01   sec  8.62 MBytes  72.5 Mbits/sec                  
+[  6]   9.01-10.01  sec  8.62 MBytes  72.3 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-10.02  sec  83.5 MBytes  69.9 Mbits/sec                  sender
+[  6] (receiver statistics not available)
+CPU Utilization: local/sender 0.1% (0.0%u/0.1%s), remote/receiver 1.2% (0.0%u/1.2%s)
+iperf 3.18
+CYGWIN_NT-10.0-22631 DESKTOP-K6LV5E 3.5.4-1.x86_64 2024-08-25 16:52 UTC x86_64
+-----------------------------------------------------------
+Server listening on 5201 (test #8)
+-----------------------------------------------------------
+Time: Fri, 24 Jan 2025 19:44:40 GMT
+Accepted connection from 193.128.1.11, port 60464
+      Cookie: xrs2vzyn6tp463qiwclzbqo2ivujarvxfv5w
+      TCP MSS: 0 (default)
+[  6] local 193.128.1.13 port 5201 connected to 193.128.1.11 port 60465
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 10 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.01   sec  2.62 MBytes  21.7 Mbits/sec                  
+[  6]   1.01-2.01   sec  3.75 MBytes  31.6 Mbits/sec                  
+[  6]   2.01-3.01   sec  3.38 MBytes  28.5 Mbits/sec                  
+[  6]   3.01-4.01   sec  3.75 MBytes  31.3 Mbits/sec                  
+[  6]   4.01-5.01   sec  2.38 MBytes  19.9 Mbits/sec                  
+[  6]   5.01-6.01   sec  3.12 MBytes  26.2 Mbits/sec                  
+[  6]   6.01-7.01   sec  3.50 MBytes  29.4 Mbits/sec                  
+[  6]   7.01-8.01   sec  3.38 MBytes  28.4 Mbits/sec                  
+[  6]   8.01-9.01   sec  3.50 MBytes  29.4 Mbits/sec                  
+[  6]   9.01-10.01  sec  2.88 MBytes  24.1 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6] (sender statistics not available)
+[  6]   0.00-10.06  sec  32.2 MBytes  26.9 Mbits/sec                  receiver
+iperf 3.18
+CYGWIN_NT-10.0-22631 DESKTOP-K6LV5E 3.5.4-1.x86_64 2024-08-25 16:52 UTC x86_64
+-----------------------------------------------------------
+Server listening on 5201 (test #9)
+-----------------------------------------------------------
+Time: Fri, 24 Jan 2025 19:44:52 GMT
+Accepted connection from 193.128.1.11, port 60466
+      Cookie: ms3ngnnik2dgbvxd4ceys7jcyerb44vs5mot
+      TCP MSS: 0 (default)
+[  6] local 193.128.1.13 port 5201 connected to 193.128.1.11 port 60467
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 10 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.01   sec  3.12 MBytes  26.1 Mbits/sec                  
+[  6]   1.01-2.00   sec  3.88 MBytes  32.6 Mbits/sec                  
+[  6]   2.00-3.01   sec  3.50 MBytes  29.3 Mbits/sec                  
+[  6]   3.01-4.01   sec  3.50 MBytes  29.4 Mbits/sec                  
+[  6]   4.01-5.00   sec  3.38 MBytes  28.4 Mbits/sec                  
+[  6]   5.00-6.00   sec  3.50 MBytes  29.5 Mbits/sec                  
+[  6]   6.00-7.00   sec  3.00 MBytes  25.2 Mbits/sec                  
+[  6]   7.00-8.02   sec  3.12 MBytes  25.8 Mbits/sec                  
+[  6]   8.02-9.01   sec  3.25 MBytes  27.3 Mbits/sec                  
+[  6]   9.01-10.00  sec  2.62 MBytes  22.3 Mbits/sec                  
+[  6]  10.00-10.06  sec   128 KBytes  17.5 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6] (sender statistics not available)
+[  6]   0.00-10.06  sec  33.0 MBytes  27.5 Mbits/sec                  receiver
+iperf 3.18
+CYGWIN_NT-10.0-22631 DESKTOP-K6LV5E 3.5.4-1.x86_64 2024-08-25 16:52 UTC x86_64
+-----------------------------------------------------------
+Server listening on 5201 (test #10)
+-----------------------------------------------------------
+Time: Fri, 24 Jan 2025 19:45:07 GMT
+Accepted connection from 193.128.1.11, port 60468
+      Cookie: atacf5k3ebv4hrzqrod35e2nw3uvre6kncg2
+      TCP MSS: 0 (default)
+[  6] local 193.128.1.13 port 5201 connected to 193.128.1.11 port 60469
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 10 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.01   sec  6.62 MBytes  54.8 Mbits/sec                  
+[  6]   1.01-2.00   sec  6.38 MBytes  54.2 Mbits/sec                  
+[  6]   2.00-3.01   sec  6.38 MBytes  53.2 Mbits/sec                  
+[  6]   3.01-4.01   sec  6.62 MBytes  55.3 Mbits/sec                  
+[  6]   4.01-5.00   sec  5.25 MBytes  44.5 Mbits/sec                  
+[  6]   5.00-6.00   sec  6.12 MBytes  51.2 Mbits/sec                  
+[  6]   6.00-7.01   sec  5.50 MBytes  45.9 Mbits/sec                  
+[  6]   7.01-8.01   sec  4.50 MBytes  37.8 Mbits/sec                  
+[  6]   8.01-9.01   sec  6.25 MBytes  52.3 Mbits/sec                  
+[  6]   9.01-10.01  sec  4.62 MBytes  38.7 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-10.05  sec  58.2 MBytes  48.6 Mbits/sec                  sender
+[  6] (receiver statistics not available)
+CPU Utilization: local/sender 0.0% (0.0%u/0.0%s), remote/receiver 0.9% (0.0%u/0.9%s)
+iperf 3.18
+CYGWIN_NT-10.0-22631 DESKTOP-K6LV5E 3.5.4-1.x86_64 2024-08-25 16:52 UTC x86_64
