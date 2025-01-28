@@ -12,7 +12,7 @@ import {
   Legend,
 } from 'chart.js';
 import { loadCsvData } from '../utils/loadCsv';
-import { MetricsTable } from './components/MetricsTable'; // Import MetricsTable
+import { MetricsTable } from '../components/MetricsTable'; // Import MetricsTable
 
 // Register Chart.js elements
 Chart.register(ArcElement, LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend);
