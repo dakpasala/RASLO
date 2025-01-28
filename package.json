@@ -7,11 +7,14 @@
         "start": "next start"
     },
     "dependencies": {
+        "@shadcn/ui": "^0.0.4",
         "@supabase/auth-helpers-nextjs": "^0.10.0",
         "@supabase/supabase-js": "^2.46.1",
+        "@tanstack/react-table": "^8.20.6",
         "autoprefixer": "^10.4.20",
         "chart.js": "^4.4.6",
         "formidable": "^3.5.2",
+        "lucide-react": "^0.474.0",
         "next": "latest",
         "papaparse": "^5.4.1",
         "pivot": "^0.1.0",

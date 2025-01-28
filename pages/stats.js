@@ -12,6 +12,7 @@ import {
   Legend,
 } from 'chart.js';
 import { loadCsvData } from '../utils/loadCsv';
+import { MetricsTable } from './components/MetricsTable'; // Import MetricsTable
 
 // Register Chart.js elements
 Chart.register(ArcElement, LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend);
@@ -20,11 +21,19 @@ export default function StatsPage({ locations, statsByRegion }) {
   const [currentRegion, setCurrentRegion] = useState(locations[0]); // Default to the first location
   const [currentStats, setCurrentStats] = useState(statsByRegion[locations[0]]);
   const [uploadMessage, setUploadMessage] = useState(''); // Message to display upload status
+  const [tableData, setTableData] = useState([]); // State for table data
 
   useEffect(() => {
-    console.log("Current Region:", currentRegion);
-    console.log("Stats for Current Region:", statsByRegion[currentRegion]);
     setCurrentStats(statsByRegion[currentRegion]);
+
+    // Update table data when currentRegion changes
+    setTableData(
+      statsByRegion[currentRegion]?.timestamps.map((timestamp, index) => ({
+        Timestamp: timestamp,
+        PostRate: statsByRegion[currentRegion]?.postRatesMB[index] || 0,
+        DownloadRate: statsByRegion[currentRegion]?.downloadRatesMB[index] || 0,
+      })) || []
+    );
   }, [currentRegion, statsByRegion]);
 
   // Handle file upload
@@ -33,23 +42,19 @@ export default function StatsPage({ locations, statsByRegion }) {
     if (file && file.name.endsWith('.log')) {
       const formData = new FormData();
       formData.append('file', file);
-  
+
       try {
         const response = await fetch('/api/upload-log', {
           method: 'POST',
           body: formData,
         });
-  
+
         if (response.ok) {
           const result = await response.json();
           setUploadMessage(result.message);
-  
-          // Re-fetch updated data without reloading
-          const updatedResponse = await fetch('/api/get-stats');
-          const updatedData = await updatedResponse.json();
-  
-          console.log("Updated Stats from API:", updatedData);
-          setCurrentStats(updatedData[currentRegion]);
+
+          // Reload the page to reflect updated data
+          window.location.reload();
         } else {
           const result = await response.json();
           setUploadMessage(`Error: ${result.message}`);
@@ -61,7 +66,7 @@ export default function StatsPage({ locations, statsByRegion }) {
     } else {
       setUploadMessage('Please upload a valid .log file.');
     }
-  };  
+  };
 
   // Data for Doughnut Chart
   const rateChartData = {
@@ -95,9 +100,6 @@ export default function StatsPage({ locations, statsByRegion }) {
       },
     ],
   };
-
-  console.log("Locations:", locations);
-  console.log("Stats by Region:", statsByRegion);
 
   return (
     <div className="min-h-screen bg-black text-white p-6">
@@ -163,7 +165,9 @@ export default function StatsPage({ locations, statsByRegion }) {
       {/* Doughnut Chart */}
       <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800">
         <h2 className="text-xl font-semibold">Download vs. Post Rate Comparison</h2>
-        <Doughnut data={rateChartData} />
+        <div className="w-1/2 mx-auto">
+          <Doughnut data={rateChartData} />
+        </div>
       </div>
 
       {/* Line Chart */}
@@ -171,23 +175,22 @@ export default function StatsPage({ locations, statsByRegion }) {
         <h2 className="text-xl font-semibold">Post and Download Rates Over Time</h2>
         <Line data={lineChartDataRates} />
       </div>
+
+      {/* Updated Metrics Table */}
+      <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800 mt-6">
+        <h2 className="text-xl font-semibold mb-4">Detailed Metrics Table</h2>
+        <MetricsTable data={tableData} />
+      </div>
     </div>
   );
 }
 
-export async function getServerSideProps() {
-  console.log("Fetching data from Supabase...");
-  let stats = [];
+export async function getStaticProps() {
+  const stats = await loadCsvData();
 
-  try {
-    stats = await loadCsvData();
-    console.log("Fetched Stats:", stats);
-  } catch (error) {
-    console.error("Failed to load data from Supabase:", error.message);
-  }
-
+  // Group data by Region
   const statsByRegion = stats.reduce((acc, entry) => {
-    const region = entry.Region || "Unknown";
+    const region = entry.Region || 'Unknown'; // Handle undefined Region values
     if (!acc[region]) {
       acc[region] = {
         timestamps: [],
@@ -206,8 +209,6 @@ export async function getServerSideProps() {
       acc[region].downloadRatesMB.reduce((a, b) => a + b, 0) / acc[region].downloadRatesMB.length;
     return acc;
   }, {});
-
-  console.log("Stats by Region:", statsByRegion);
 
   return {
     props: {

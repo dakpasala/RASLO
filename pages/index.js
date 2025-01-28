@@ -29,7 +29,7 @@ export default function Home() {
   
       if (data?.user) {
         // Set a temporary cookie to bypass middleware session check
-        document.cookie = 'x-allow-login=true; path=/; max-age=100'; // Allow for 10 seconds
+        document.cookie = 'x-allow-login=true; path=/; max-age=100'; // Allow for 100 seconds
         router.push('/stats');
       } else {
         setErrorMessage('Login failed. Please try again.');
