@@ -134,6 +134,12 @@ export default function StatsPage({ locations, statsByRegion }) {
 
       <h2 className="text-2xl font-bold mb-4">Region: {currentRegion}</h2>
 
+      {/* Updated Metrics Table */}
+      <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800 mt-6">
+        <h2 className="text-xl font-semibold mb-4">Detailed Metrics Table</h2>
+        <MetricsTable data={tableData} />
+      </div>
+
       {/* Speedometers */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800">
@@ -176,11 +182,6 @@ export default function StatsPage({ locations, statsByRegion }) {
         <Line data={lineChartDataRates} />
       </div>
 
-      {/* Updated Metrics Table */}
-      <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800 mt-6">
-        <h2 className="text-xl font-semibold mb-4">Detailed Metrics Table</h2>
-        <MetricsTable data={tableData} />
-      </div>
     </div>
   );
 }

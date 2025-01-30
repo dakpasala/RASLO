@@ -36,18 +36,21 @@ export const MetricsTable = ({ data }) => {
   const columns = useMemo(() => [
     {
       accessorKey: "Timestamp",
-      header: "Timestamp",
+      header: () => (
+        <span className="text-black">Timestamp</span>
+      ),
       cell: (info) => info.getValue(),
-    },
+    },    
     {
       accessorKey: "PostRate",
       header: ({ column }) => (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-black"
         >
           Post Rate (MB/s)
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-2 h-4 w-4 text-black" />
         </Button>
       ),
       cell: (info) => info.getValue(),
@@ -58,14 +61,16 @@ export const MetricsTable = ({ data }) => {
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-black"
         >
           Download Rate (MB/s)
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-2 h-4 w-4 text-black" />
         </Button>
       ),
       cell: (info) => info.getValue(),
     },
   ], []);
+  
   
 
   const [sorting, setSorting] = useState([]);
