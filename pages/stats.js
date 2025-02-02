@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { Doughnut, Line } from "react-chartjs-2";
-import ReactSpeedometer from "react-d3-speedometer";
+import { useEffect, useState } from 'react';
+import { Doughnut, Line } from 'react-chartjs-2';
+import ReactSpeedometer from 'react-d3-speedometer';
 import {
   Chart,
   ArcElement,
@@ -10,94 +10,68 @@ import {
   PointElement,
   Tooltip,
   Legend,
-} from "chart.js";
-import { loadCsvData } from "../utils/loadCsv";
-import { MetricsTable } from "../components/MetricsTable"; // Import MetricsTable
+} from 'chart.js';
+import { loadCsvData } from '../utils/loadCsv';
+import { MetricsTable } from '../components/MetricsTable'; // Import MetricsTable
 
 // Register Chart.js elements
-Chart.register(
-  ArcElement,
-  LineElement,
-  PointElement,
-  CategoryScale,
-  LinearScale,
-  Tooltip,
-  Legend
-);
+Chart.register(ArcElement, LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 export default function StatsPage({ locations, statsByRegion }) {
   const [currentRegion, setCurrentRegion] = useState(locations[0]); // Default to the first location
   const [currentStats, setCurrentStats] = useState(statsByRegion[locations[0]]);
-  const [uploadMessage, setUploadMessage] = useState(""); // Message to display upload status
-  const [filteredStats, setFilteredStats] = useState({});
-  const [timeRange, setTimeRange] = useState("all"); // Default time range: all time
+  const [uploadMessage, setUploadMessage] = useState(''); // Message to display upload status
+  const [filteredStats, setFilteredStats] = useState({}); // State for filtered stats
+  const [timeRange, setTimeRange] = useState('all'); // 'today', 'week', 'month', 'all'
 
   useEffect(() => {
+    setCurrentStats(statsByRegion[currentRegion]);
+  }, [currentRegion, statsByRegion]);
+
+  useEffect(() => {
+    if (currentStats) {
+      filterStatsByTimeRange();
+    }
+  }, [currentStats, timeRange]);
+
+  const filterStatsByTimeRange = () => {
     const now = new Date();
-
-    const filterStatsByTimeRange = () => {
-      const timestamps = statsByRegion[currentRegion]?.timestamps || [];
-      const postRatesMB = statsByRegion[currentRegion]?.postRatesMB || [];
-      const downloadRatesMB = statsByRegion[currentRegion]?.downloadRatesMB || [];
-
-      let filteredData = timestamps.map((timestamp, index) => ({
-        Timestamp: timestamp,
-        PostRate: postRatesMB[index],
-        DownloadRate: downloadRatesMB[index],
-      }));
-
-      if (timeRange === "today") {
-        const todayStart = new Date(now.setHours(0, 0, 0, 0));
-        const todayEnd = new Date(now.setHours(23, 59, 59, 999));
-        filteredData = filteredData.filter((data) => {
-          const date = new Date(data.Timestamp);
-          return date >= todayStart && date <= todayEnd;
-        });
-      } else if (timeRange === "last7days") {
-        const sevenDaysAgo = new Date(now.setDate(now.getDate() - 7));
-        filteredData = filteredData.filter(
-          (data) => new Date(data.Timestamp) >= sevenDaysAgo
-        );
-      } else if (timeRange === "lastmonth") {
-        const lastMonthStart = new Date(
-          now.getFullYear(),
-          now.getMonth() - 1,
-          1
-        );
-        const thisMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-        filteredData = filteredData.filter(
-          (data) =>
-            new Date(data.Timestamp) >= lastMonthStart &&
-            new Date(data.Timestamp) < thisMonthStart
-        );
-      }
-
-      return {
-        timestamps: filteredData.map((item) => item.Timestamp),
-        postRatesMB: filteredData.map((item) => item.PostRate),
-        downloadRatesMB: filteredData.map((item) => item.DownloadRate),
-        averagePostRate:
-          filteredData.reduce((acc, item) => acc + item.PostRate, 0) /
-          (filteredData.length || 1),
-        averageDownloadRate:
-          filteredData.reduce((acc, item) => acc + item.DownloadRate, 0) /
-          (filteredData.length || 1),
-      };
+    const filteredData = {
+      timestamps: [],
+      postRatesMB: [],
+      downloadRatesMB: [],
     };
 
-    setFilteredStats(filterStatsByTimeRange());
-  }, [currentRegion, statsByRegion, timeRange]);
+    currentStats.timestamps.forEach((timestamp, index) => {
+      const date = new Date(timestamp);
+
+      if (
+        (timeRange === 'today' && date.toDateString() === now.toDateString()) ||
+        (timeRange === 'week' &&
+          date > new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7)) ||
+        (timeRange === 'month' &&
+          date > new Date(now.getFullYear(), now.getMonth() - 1, now.getDate())) ||
+        timeRange === 'all'
+      ) {
+        filteredData.timestamps.push(timestamp);
+        filteredData.postRatesMB.push(currentStats.postRatesMB[index]);
+        filteredData.downloadRatesMB.push(currentStats.downloadRatesMB[index]);
+      }
+    });
+
+    setFilteredStats(filteredData);
+  };
 
   // Handle file upload
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
-    if (file && file.name.endsWith(".log")) {
+    if (file && file.name.endsWith('.log')) {
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append('file', file);
 
       try {
-        const response = await fetch("/api/upload-log", {
-          method: "POST",
+        const response = await fetch('/api/upload-log', {
+          method: 'POST',
           body: formData,
         });
 
@@ -112,42 +86,44 @@ export default function StatsPage({ locations, statsByRegion }) {
           setUploadMessage(`Error: ${result.message}`);
         }
       } catch (error) {
-        console.error("Error uploading file:", error);
-        setUploadMessage("An error occurred. Please try again.");
+        console.error('Error uploading file:', error);
+        setUploadMessage('An error occurred. Please try again.');
       }
     } else {
-      setUploadMessage("Please upload a valid .log file.");
+      setUploadMessage('Please upload a valid .log file.');
     }
   };
 
   // Data for Doughnut Chart
   const rateChartData = {
-    labels: ["Average Post Rate", "Average Download Rate"],
+    labels: ['Average Post Rate', 'Average Download Rate'],
     datasets: [
       {
         data: [
-          filteredStats?.averagePostRate || 0,
-          filteredStats?.averageDownloadRate || 0,
+          filteredStats.postRatesMB?.reduce((a, b) => a + b, 0) /
+            (filteredStats.postRatesMB?.length || 1) || 0,
+          filteredStats.downloadRatesMB?.reduce((a, b) => a + b, 0) /
+            (filteredStats.downloadRatesMB?.length || 1) || 0,
         ],
-        backgroundColor: ["#4CAF50", "#FF5722"],
+        backgroundColor: ['#4CAF50', '#FF5722'],
       },
     ],
   };
 
   // Data for Line Chart (Trends over time for MB/sec)
   const lineChartDataRates = {
-    labels: filteredStats?.timestamps || [],
+    labels: filteredStats.timestamps || [],
     datasets: [
       {
-        label: "Post Rate MB/sec",
-        data: filteredStats?.postRatesMB || [],
-        borderColor: "#4CAF50",
+        label: 'Post Rate MB/sec',
+        data: filteredStats.postRatesMB || [],
+        borderColor: '#4CAF50',
         fill: false,
       },
       {
-        label: "Download Rate MB/sec",
-        data: filteredStats?.downloadRatesMB || [],
-        borderColor: "#FF5722",
+        label: 'Download Rate MB/sec',
+        data: filteredStats.downloadRatesMB || [],
+        borderColor: '#FF5722',
         fill: false,
       },
     ],
@@ -164,7 +140,7 @@ export default function StatsPage({ locations, statsByRegion }) {
             key={region}
             onClick={() => setCurrentRegion(region)}
             className={`px-4 py-2 rounded ${
-              region === currentRegion ? "bg-blue-600" : "bg-gray-800"
+              region === currentRegion ? 'bg-blue-600' : 'bg-gray-800'
             } text-white hover:bg-blue-500`}
           >
             {region}
@@ -172,25 +148,31 @@ export default function StatsPage({ locations, statsByRegion }) {
         ))}
       </div>
 
-      {/* Time Range Selector */}
+      {/* Time Range Selection Buttons */}
       <div className="flex gap-4 mb-6">
-        {["all", "today", "last7days", "lastmonth"].map((range) => (
+        {['today', 'week', 'month', 'all'].map((range) => (
           <button
             key={range}
             onClick={() => setTimeRange(range)}
             className={`px-4 py-2 rounded ${
-              range === timeRange ? "bg-blue-600" : "bg-gray-800"
+              range === timeRange ? 'bg-blue-600' : 'bg-gray-800'
             } text-white hover:bg-blue-500`}
           >
-            {range === "all"
-              ? "All Time"
-              : range === "today"
-              ? "Today"
-              : range === "last7days"
-              ? "Last 7 Days"
-              : "Last Month"}
+            {range.charAt(0).toUpperCase() + range.slice(1)}
           </button>
         ))}
+      </div>
+
+      {/* Add Data Button */}
+      <div className="mb-6">
+        <input
+          type="file"
+          name="file" // <-- This ensures the field name matches the backend
+          accept=".log"
+          onChange={handleFileUpload}
+          className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700"
+        />
+        {uploadMessage && <p className="mt-2 text-green-500">{uploadMessage}</p>}
       </div>
 
       <h2 className="text-2xl font-bold mb-4">Region: {currentRegion}</h2>
@@ -202,13 +184,11 @@ export default function StatsPage({ locations, statsByRegion }) {
         </h2>
         <MetricsTable
           data={
-            filteredStats?.timestamps
-              ? filteredStats.timestamps.map((timestamp, index) => ({
-                  Timestamp: timestamp,
-                  PostRate: filteredStats.postRatesMB[index],
-                  DownloadRate: filteredStats.downloadRatesMB[index],
-                }))
-              : []
+            filteredStats.timestamps?.map((timestamp, index) => ({
+              Timestamp: timestamp,
+              PostRate: filteredStats.postRatesMB[index],
+              DownloadRate: filteredStats.downloadRatesMB[index],
+            })) || []
           }
         />
       </div>
@@ -216,12 +196,13 @@ export default function StatsPage({ locations, statsByRegion }) {
       {/* Speedometers */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800">
-          <h2 className="text-xl font-semibold text-center mb-4">
-            Post Rate (MB/s)
-          </h2>
+          <h2 className="text-xl font-semibold text-center mb-4">Post Rate (MB/s)</h2>
           <ReactSpeedometer
             maxValue={100}
-            value={filteredStats?.averagePostRate || 0}
+            value={
+              filteredStats.postRatesMB?.reduce((a, b) => a + b, 0) /
+                (filteredStats.postRatesMB?.length || 1) || 0
+            }
             segments={10}
             needleColor="#4CAF50"
             startColor="#FF5722"
@@ -230,12 +211,13 @@ export default function StatsPage({ locations, statsByRegion }) {
           />
         </div>
         <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800">
-          <h2 className="text-xl font-semibold text-center mb-4">
-            Download Rate (MB/s)
-          </h2>
+          <h2 className="text-xl font-semibold text-center mb-4">Download Rate (MB/s)</h2>
           <ReactSpeedometer
             maxValue={100}
-            value={filteredStats?.averageDownloadRate || 0}
+            value={
+              filteredStats.downloadRatesMB?.reduce((a, b) => a + b, 0) /
+                (filteredStats.downloadRatesMB?.length || 1) || 0
+            }
             segments={10}
             needleColor="#FF5722"
             startColor="#FF5722"
@@ -247,9 +229,7 @@ export default function StatsPage({ locations, statsByRegion }) {
 
       {/* Doughnut Chart */}
       <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800">
-        <h2 className="text-xl font-semibold">
-          Download vs. Post Rate Comparison
-        </h2>
+        <h2 className="text-xl font-semibold">Download vs. Post Rate Comparison</h2>
         <div className="w-1/2 mx-auto">
           <Doughnut data={rateChartData} />
         </div>
@@ -257,9 +237,7 @@ export default function StatsPage({ locations, statsByRegion }) {
 
       {/* Line Chart */}
       <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800 mt-6">
-        <h2 className="text-xl font-semibold">
-          Post and Download Rates Over Time
-        </h2>
+        <h2 className="text-xl font-semibold">Post and Download Rates Over Time</h2>
         <Line data={lineChartDataRates} />
       </div>
     </div>
@@ -271,12 +249,10 @@ export async function getStaticProps() {
 
   // Group data by Region
   const statsByRegion = stats.reduce((acc, entry) => {
-    const region = entry.Region || "Unknown"; // Handle undefined Region values
+    const region = entry.Region || 'Unknown'; // Handle undefined Region values
     if (!acc[region]) {
       acc[region] = {
         timestamps: [],
-        averagePostRate: 0,
-        averageDownloadRate: 0,
         postRatesMB: [],
         downloadRatesMB: [],
       };
@@ -284,12 +260,6 @@ export async function getStaticProps() {
     acc[region].timestamps.push(entry.Timestamp || null);
     acc[region].postRatesMB.push(entry.Post_Rate_MB_per_Sec || 0);
     acc[region].downloadRatesMB.push(entry.Download_Rate_MB_per_Sec || 0);
-    acc[region].averagePostRate =
-      acc[region].postRatesMB.reduce((a, b) => a + b, 0) /
-      acc[region].postRatesMB.length;
-    acc[region].averageDownloadRate =
-      acc[region].downloadRatesMB.reduce((a, b) => a + b, 0) /
-      acc[region].downloadRatesMB.length;
     return acc;
   }, {});
 
