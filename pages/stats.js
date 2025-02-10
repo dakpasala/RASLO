@@ -1,6 +1,9 @@
+// Import necessary React hooks and visualization components
 import { useEffect, useState } from 'react';
 import { Doughnut, Line } from 'react-chartjs-2';
 import ReactSpeedometer from 'react-d3-speedometer';
+import { rasloLogo } from '../public/raslo.png';
+
 import {
   Chart,
   ArcElement,
@@ -12,28 +15,36 @@ import {
   Legend,
 } from 'chart.js';
 import { loadCsvData } from '../utils/loadCsv';
-import { MetricsTable } from '../components/MetricsTable'; // Import MetricsTable
+import { MetricsTable } from '../components/MetricsTable'; // Component for displaying metrics in tabular format
 
-// Register Chart.js elements
+console.log('Image source:', rasloLogo);
+
+
+// Register required Chart.js components for visualization
 Chart.register(ArcElement, LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend);
 
+// Main StatsPage component that displays WiFi speed statistics
 export default function StatsPage({ locations, statsByRegion }) {
-  const [currentRegion, setCurrentRegion] = useState(locations[0]); // Default to the first location
-  const [currentStats, setCurrentStats] = useState(statsByRegion[locations[0]]);
-  const [uploadMessage, setUploadMessage] = useState(''); // Message to display upload status
-  const [filteredStats, setFilteredStats] = useState({}); // State for filtered stats
-  const [timeRange, setTimeRange] = useState('all'); // 'today', 'week', 'month', 'all'
+  // State management for various component features
+  const [currentRegion, setCurrentRegion] = useState(locations[0]); // Track selected region
+  const [currentStats, setCurrentStats] = useState(statsByRegion[locations[0]]); // Store stats for current region
+  const [uploadMessage, setUploadMessage] = useState(''); // Feedback message for file uploads
+  const [filteredStats, setFilteredStats] = useState({}); // Stats filtered by time range
+  const [timeRange, setTimeRange] = useState('all'); // Selected time period filter
 
+  // Update current stats when region changes
   useEffect(() => {
     setCurrentStats(statsByRegion[currentRegion]);
   }, [currentRegion, statsByRegion]);
 
+  // Filter stats when time range or current stats change
   useEffect(() => {
     if (currentStats) {
       filterStatsByTimeRange();
     }
   }, [currentStats, timeRange]);
 
+  // Function to filter statistics based on selected time range
   const filterStatsByTimeRange = () => {
     const now = new Date();
     const filteredData = {
@@ -42,9 +53,11 @@ export default function StatsPage({ locations, statsByRegion }) {
       downloadRatesMB: [],
     };
 
+    // Iterate through timestamps and filter based on selected time range
     currentStats.timestamps.forEach((timestamp, index) => {
       const date = new Date(timestamp);
 
+      // Apply different date filters based on selected time range
       if (
         (timeRange === 'today' && date.toDateString() === now.toDateString()) ||
         (timeRange === 'week' &&
@@ -62,7 +75,7 @@ export default function StatsPage({ locations, statsByRegion }) {
     setFilteredStats(filteredData);
   };
 
-  // Handle file upload
+  // Handle log file upload and processing
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
     if (file && file.name.endsWith('.log')) {
@@ -70,6 +83,7 @@ export default function StatsPage({ locations, statsByRegion }) {
       formData.append('file', file);
 
       try {
+        // Send file to server for processing
         const response = await fetch('/api/upload-log', {
           method: 'POST',
           body: formData,
@@ -79,7 +93,7 @@ export default function StatsPage({ locations, statsByRegion }) {
           const result = await response.json();
           setUploadMessage(result.message);
 
-          // Reload the page to reflect updated data
+          // Refresh page to show updated data
           window.location.reload();
         } else {
           const result = await response.json();
@@ -94,12 +108,13 @@ export default function StatsPage({ locations, statsByRegion }) {
     }
   };
 
-  // Data for Doughnut Chart
+  // Prepare data for the doughnut chart comparing average rates
   const rateChartData = {
     labels: ['Average Post Rate', 'Average Download Rate'],
     datasets: [
       {
         data: [
+          // Calculate averages for post and download rates
           filteredStats.postRatesMB?.reduce((a, b) => a + b, 0) /
             (filteredStats.postRatesMB?.length || 1) || 0,
           filteredStats.downloadRatesMB?.reduce((a, b) => a + b, 0) /
@@ -110,7 +125,7 @@ export default function StatsPage({ locations, statsByRegion }) {
     ],
   };
 
-  // Data for Line Chart (Trends over time for MB/sec)
+  // Prepare data for the line chart showing rate trends over time
   const lineChartDataRates = {
     labels: filteredStats.timestamps || [],
     datasets: [
@@ -129,11 +144,26 @@ export default function StatsPage({ locations, statsByRegion }) {
     ],
   };
 
+  // Component UI rendering
   return (
     <div className="min-h-screen bg-black text-white p-6">
+
+      {/*raslo image */}
+      <img
+        src='./raslo.png' // Replace this with "/raslo.png" if using the public folder
+        alt="RASLO Logo"
+        className="absolute top-5 right-5" // Positions the image at the top-right corner
+        style={{
+          width: 'auto',  // Maintain the aspect ratio of the image
+          height: '200px', // Set the height (adjust this value as needed)
+          objectFit: 'contain', // Ensures the image doesn't stretch
+        }}
+      />
+
+
       <h1 className="text-3xl font-bold mb-6">WiFi Speed Dashboard</h1>
 
-      {/* Location Selection Buttons */}
+      {/* Region selection buttons */}
       <div className="flex flex-wrap gap-4 mb-6">
         {Object.keys(statsByRegion).map((region) => (
           <button
@@ -148,7 +178,7 @@ export default function StatsPage({ locations, statsByRegion }) {
         ))}
       </div>
 
-      {/* Time Range Selection Buttons */}
+      {/* Time range filter buttons */}
       <div className="flex gap-4 mb-6">
         {['today', 'week', 'month', 'all'].map((range) => (
           <button
@@ -163,11 +193,11 @@ export default function StatsPage({ locations, statsByRegion }) {
         ))}
       </div>
 
-      {/* Add Data Button */}
+      {/* File upload section */}
       <div className="mb-6">
         <input
           type="file"
-          name="file" // <-- This ensures the field name matches the backend
+          name="file"
           accept=".log"
           onChange={handleFileUpload}
           className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700"
@@ -177,7 +207,7 @@ export default function StatsPage({ locations, statsByRegion }) {
 
       <h2 className="text-2xl font-bold mb-4">Region: {currentRegion}</h2>
 
-      {/* Updated Metrics Table */}
+      {/* Metrics table section */}
       <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800 mt-6">
         <h2 className="text-xl font-semibold mb-4">
           Detailed Metrics Table ({timeRange})
@@ -227,29 +257,55 @@ export default function StatsPage({ locations, statsByRegion }) {
         </div>
       </div>
 
-      {/* Doughnut Chart */}
+      {/* Doughnut chart section */}
       <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800">
         <h2 className="text-xl font-semibold">Download vs. Post Rate Comparison</h2>
         <div className="w-1/2 mx-auto">
-          <Doughnut data={rateChartData} />
+          <Doughnut
+            data={{
+              ...rateChartData,
+              datasets: [
+                {
+                  ...rateChartData.datasets[0],
+                  backgroundColor: ['#1E90FF', '#8B0000'], // Blue for Post Rate, Red for Download Rate
+                },
+              ],
+            }}
+          />
         </div>
       </div>
 
-      {/* Line Chart */}
+      {/* Line chart section */}
       <div className="bg-black p-6 rounded-lg shadow-md border border-gray-800 mt-6">
         <h2 className="text-xl font-semibold">Post and Download Rates Over Time</h2>
-        <Line data={lineChartDataRates} />
+        <Line
+          data={{
+            ...lineChartDataRates,
+            datasets: [
+              {
+                ...lineChartDataRates.datasets[0],
+                borderColor: '#1E90FF', // Blue for Post Rate
+              },
+              {
+                ...lineChartDataRates.datasets[1],
+                borderColor: '#8B0000', // Red for Download Rate
+              },
+            ],
+          }}
+        />
       </div>
     </div>
   );
 }
 
+// Server-side data fetching function
 export async function getStaticProps() {
+  // Load CSV data from the server
   const stats = await loadCsvData();
 
-  // Group data by Region
+  // Process and group data by region
   const statsByRegion = stats.reduce((acc, entry) => {
-    const region = entry.Region || 'Unknown'; // Handle undefined Region values
+    const region = entry.Region || 'Unknown'; // Default to 'Unknown' if region is undefined
     if (!acc[region]) {
       acc[region] = {
         timestamps: [],
@@ -263,6 +319,7 @@ export async function getStaticProps() {
     return acc;
   }, {});
 
+  // Return props for the page component
   return {
     props: {
       locations: Object.keys(statsByRegion),
