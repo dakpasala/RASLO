@@ -299,13 +299,12 @@ export default function StatsPage({ locations, statsByRegion }) {
 }
 
 // Server-side data fetching function
-export async function getStaticProps() {
-  // Load CSV data from the server
+export async function getServerSideProps() {
   const stats = await loadCsvData();
 
   // Process and group data by region
   const statsByRegion = stats.reduce((acc, entry) => {
-    const region = entry.Region || 'Unknown'; // Default to 'Unknown' if region is undefined
+    const region = entry.Region || "Unknown"; // Default to 'Unknown' if region is undefined
     if (!acc[region]) {
       acc[region] = {
         timestamps: [],
@@ -319,7 +318,6 @@ export async function getStaticProps() {
     return acc;
   }, {});
 
-  // Return props for the page component
   return {
     props: {
       locations: Object.keys(statsByRegion),
