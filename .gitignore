@@ -2,3 +2,5 @@ node_modules/
 
 .next/
 .env.local
+
+upload_log.sh
