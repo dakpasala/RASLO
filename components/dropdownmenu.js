@@ -1,23 +1,45 @@
 import React, { useState } from "react";
 
-export const DropdownMenu = ({ children }) => <div className="relative">{children}</div>;
+export const DropdownMenu = ({ children }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
-export const DropdownMenuTrigger = ({ children }) => (
-  <div className="cursor-pointer">{children}</div>
+  return (
+    <div className="relative">
+      {React.Children.map(children, (child) =>
+        React.cloneElement(child, { isOpen, setIsOpen })
+      )}
+    </div>
+  );
+};
+
+export const DropdownMenuTrigger = ({ children, isOpen, setIsOpen }) => (
+  <div
+    className="cursor-pointer"
+    onClick={() => setIsOpen((prev) => !prev)} // Toggle state on click
+  >
+    {children}
+  </div>
 );
 
-export const DropdownMenuContent = ({ children, align = "end" }) => (
+export const DropdownMenuContent = ({ children, align = "end", isOpen }) => {
+  if (!isOpen) return null; // Hide content when `isOpen` is false
+
+  return (
     <div
       className={`absolute ${align === "end" ? "right-0" : "left-0"} mt-2 w-48 bg-black text-white border border-gray-700 rounded shadow-md`}
     >
       {children}
     </div>
   );
+};
 
-export const DropdownMenuItem = ({ children, onClick }) => (
+export const DropdownMenuItem = ({ children, onClick, setIsOpen }) => (
   <div
-    onClick={onClick}
-    className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+    onClick={() => {
+      onClick && onClick();
+      setIsOpen(false); // Close dropdown when an item is clicked
+    }}
+    className="px-4 py-2 cursor-pointer hover:bg-gray-700"
   >
     {children}
   </div>
