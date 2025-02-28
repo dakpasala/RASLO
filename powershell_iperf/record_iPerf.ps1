@@ -77,7 +77,7 @@ else{
     Write-Host "No error reported from iPerf. Now trying to upload iPerf results"
 }
 
-$resultsAsJSON | ConvertTo-Json | Set-Content -Path .\saveHereTest.json
+$resultsAsJSON | ConvertTo-Json | Set-Content -Path .\saveHereTest.log
 
 $url = "https://raslo.vercel.app/api/upload-log"
 $response = Invoke-RestMethod -Method 'Post' -Uri $url #-Body ($resultsASJson | ConvertTo-Json)

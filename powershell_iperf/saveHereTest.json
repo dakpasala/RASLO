@@ -1,0 +1,111 @@
+{
+    "start":  {
+                  "connected":  [
+                                    "@{socket=5; local_host=10.0.2.15; local_port=51018; remote_host=259.178.1.263; remote_port=5201}"
+                                ],
+                  "version":  "iperf 3.17.1",
+                  "system_info":  "CYGWIN_NT-10.0-19045 windows2 3.5.3-1.x86_64 2024-04-03 17:25 UTC x86_64",
+                  "timestamp":  {
+                                    "time":  "Fri, 28 Feb 2025 04:30:03 GMT",
+                                    "timesecs":  1740717003
+                                },
+                  "connecting_to":  {
+                                        "host":  "259.178.1.263",
+                                        "port":  5201
+                                    },
+                  "cookie":  "shi32zvs5zazxpsog3n6cz4i4w",
+                  "tcp_mss_default":  1460,
+                  "target_bitrate":  0,
+                  "fq_rate":  0,
+                  "sock_bufsize":  0,
+                  "sndbuf_actual":  65536,
+                  "rcvbuf_actual":  65536,
+                  "test_start":  {
+                                     "protocol":  "TCP",
+                                     "num_streams":  1,
+                                     "blksize":  131072,
+                                     "omit":  0,
+                                     "duration":  10,
+                                     "bytes":  0,
+                                     "blocks":  0,
+                                     "reverse":  0,
+                                     "tos":  0,
+                                     "target_bitrate":  0,
+                                     "bidir":  0,
+                                     "fqrate":  0,
+                                     "interval":  1
+                                 }
+              },
+    "intervals":  [
+                      {
+                          "streams":  "",
+                          "sum":  "@{start=0; end=1.002931; seconds=1.0029309988021851; bytes=19922944; bits_per_second=158917764.22341526; omitted=False; sender=True}"
+                      },
+                      {
+                          "streams":  "",
+                          "sum":  "@{start=1.002931; end=2.003049; seconds=1.0001180171966553; bytes=18743296; bits_per_second=149928673.83821538; omitted=False; sender=True}"
+                      },
+                      {
+                          "streams":  "",
+                          "sum":  "@{start=2.003049; end=3.002988; seconds=0.99993902444839478; bytes=17432576; bits_per_second=139469112.20604867; omitted=False; sender=True}"
+                      },
+                      {
+                          "streams":  "",
+                          "sum":  "@{start=3.002988; end=4.002436; seconds=0.999448001384735; bytes=18612224; bits_per_second=148980028.76958293; omitted=False; sender=True}"
+                      },
+                      {
+                          "streams":  "",
+                          "sum":  "@{start=4.002436; end=5.003327; seconds=1.0008909702301025; bytes=18874368; bits_per_second=150860531.75730681; omitted=False; sender=True}"
+                      },
+                      {
+                          "streams":  "",
+                          "sum":  "@{start=5.003327; end=6.003351; seconds=1.0000239610672; bytes=19529728; bits_per_second=156234080.46469909; omitted=False; sender=True}"
+                      },
+                      {
+                          "streams":  "",
+                          "sum":  "@{start=6.003351; end=7.003953; seconds=1.0006020069122314; bytes=22806528; bits_per_second=182342452.5831517; omitted=False; sender=True}"
+                      },
+                      {
+                          "streams":  "",
+                          "sum":  "@{start=7.003953; end=8.003255; seconds=0.99930202960968018; bytes=20840448; bits_per_second=166840033.40323544; omitted=False; sender=True}"
+                      },
+                      {
+                          "streams":  "",
+                          "sum":  "@{start=8.003255; end=9.003556; seconds=1.0003010034561157; bytes=20578304; bits_per_second=164576893.78617358; omitted=False; sender=True}"
+                      },
+                      {
+                          "streams":  "",
+                          "sum":  "@{start=9.003556; end=10.002241; seconds=0.99868500232696533; bytes=19791872; bits_per_second=158543460.28134483; omitted=False; sender=True}"
+                      }
+                  ],
+    "end":  {
+                "streams":  [
+                                "@{sender=; receiver=}"
+                            ],
+                "sum_sent":  {
+                                 "start":  0,
+                                 "end":  10.002241,
+                                 "seconds":  10.002241,
+                                 "bytes":  197132288,
+                                 "bits_per_second":  157670496.4417474,
+                                 "sender":  true
+                             },
+                "sum_received":  {
+                                     "start":  0,
+                                     "end":  10.03753,
+                                     "seconds":  10.03753,
+                                     "bytes":  196739072,
+                                     "bits_per_second":  156802776.77874935,
+                                     "sender":  true
+                                 },
+                "cpu_utilization_percent":  {
+                                                "host_total":  0.30904317143691418,
+                                                "host_user":  0.15950615299969761,
+                                                "host_system":  0.14953701843721653,
+                                                "remote_total":  4.5030460316906842,
+                                                "remote_user":  1.8629858582437127,
+                                                "remote_system":  2.640060173446972
+                                            }
+            },
+    "location":  "Raslo"
+}
