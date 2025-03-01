@@ -179,7 +179,7 @@ export default function StatsPage({ locations, statsByRegion }) {
   // Handle log file upload and processing
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
-    if (file && file.name.endsWith('.log')) {
+    if (file && file.name.endsWith('.json')) {
       const formData = new FormData();
       formData.append('file', file);
 
@@ -205,7 +205,7 @@ export default function StatsPage({ locations, statsByRegion }) {
         setUploadMessage('An error occurred. Please try again.');
       }
     } else {
-      setUploadMessage('Please upload a valid .log file.');
+      setUploadMessage('Please upload a valid .json file.');
     }
   };
 
@@ -309,7 +309,7 @@ export default function StatsPage({ locations, statsByRegion }) {
         <input
           type="file"
           name="file"
-          accept=".log"
+          accept=".json"
           onChange={handleFileUpload}
           className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700"
         />
