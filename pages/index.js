@@ -30,7 +30,8 @@ export default function Home() {
   
       if (data?.user) { // If login is successful and user data is returned
         // Set a temporary cookie to allow session verification
-        document.cookie = 'x-allow-login=true; path=/; max-age=100'; // Valid for 100 seconds
+        const expiryTimestamp = Date.now() + 100 * 1000; // 100 seconds from now
+        document.cookie = `x-allow-login=${expiryTimestamp}; path=/; max-age=100`;
         router.push('/stats'); // Redirect user to the statistics page
       } else {
         setErrorMessage('Login failed. Please try again.'); // Display login failure message

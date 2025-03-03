@@ -36,24 +36,26 @@ const processLogFile = async (jsonFilePath) => {
       Post_Rate_Files_per_Sec: null,
       Download_Rate_Files_per_Sec: null,
       // Calculate rates from bits_per_second if available
-      Post_Rate_MB_per_Sec: null,
       Post_Rate_Mbits_per_Sec: null,
-      Download_Rate_MB_per_Sec: null,
+      Post_Rate_MB_per_Sec: null,
       Download_Rate_Mbits_per_Sec: null,
+      Download_Rate_MB_per_Sec: null,
     };
 
     // Process sum_sent as the post rate (if available)
     if (jsonData.end && jsonData.end.sum_sent) {
       const postBits = jsonData.end.sum_sent.bits_per_second;
-      currentTest.Post_Rate_MB_per_Sec = postBits ? postBits / 1e6 : null;
+      // Convert bits per second to Mbits per second
       currentTest.Post_Rate_Mbits_per_Sec = postBits ? postBits / 1e6 : null;
+      // MB/sec is Mbits/sec divided by 8
+      currentTest.Post_Rate_MB_per_Sec = postBits ? (postBits / 1e6) / 8 : null;
     }
 
     // Process sum_received as the download rate (if available)
     if (jsonData.end && jsonData.end.sum_received) {
       const downloadBits = jsonData.end.sum_received.bits_per_second;
-      currentTest.Download_Rate_MB_per_Sec = downloadBits ? downloadBits / 1e6 : null;
       currentTest.Download_Rate_Mbits_per_Sec = downloadBits ? downloadBits / 1e6 : null;
+      currentTest.Download_Rate_MB_per_Sec = downloadBits ? (downloadBits / 1e6) / 8 : null;
     }
 
     // Mimic the original processLog.js logic:

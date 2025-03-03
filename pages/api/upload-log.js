@@ -29,7 +29,7 @@ export default async function handler(req, res) {
       console.log("Files:", files);
 
       const uploadedFile = Array.isArray(files.file) ? files.file[0] : files.file;
-      const uploadedFilePath = uploadedFile?.filepath;
+      const uploadedFilePath = uploadedFile?.filepath || uploadedFile?.path;
 
       if (!uploadedFilePath) {
         console.error("No file uploaded or incorrect form field name");

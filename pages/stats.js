@@ -23,6 +23,7 @@ console.log('Image source:', rasloLogo);
 // Register required Chart.js components for visualization
 Chart.register(ArcElement, LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend);
 
+
 // Main StatsPage component that displays WiFi speed statistics
 export default function StatsPage({ locations, statsByRegion }) {
   // State management for various component features
@@ -35,6 +36,18 @@ export default function StatsPage({ locations, statsByRegion }) {
   const [selectedAllRate, setSelectedAllRate] = useState('post');
   // Color array for multi-line charts in All view
   const colorArray = ['#1E90FF', '#FF5722', '#4CAF50', '#FFD700', '#8A2BE2', '#FF1493'];
+
+  const [timeLeft, setTimeLeft] = useState(100);
+
+  // Decrement the timer by 1 every second, until it reaches 0
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(prev => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+
+    // Cleanup on unmount
+    return () => clearInterval(timer);
+  }, []);
 
   // Update current stats when region changes
   useEffect(() => {
@@ -110,6 +123,7 @@ export default function StatsPage({ locations, statsByRegion }) {
 
     setFilteredStats(filteredData);
   };
+
 
   // Pre-generated color palette using golden ratio for even distribution
   const distinctColors = (() => {
@@ -260,6 +274,24 @@ export default function StatsPage({ locations, statsByRegion }) {
           objectFit: 'contain', // Ensures the image doesn't stretch
         }}
       />
+
+      {/* Timer UI at top center */}
+        {timeLeft > 0 && (
+          <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
+            <div className="bg-blue-600 text-white px-4 py-2 rounded shadow">
+              Session expires in {timeLeft} seconds
+            </div>
+          </div>
+        )}
+
+        {/* Overlay when session expires */}
+        {timeLeft === 0 && (
+          <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+            <div className="bg-red-600 text-white p-8 rounded shadow text-2xl font-bold w-1/2 text-center">
+              Time has Expired, Please Reload to Log Back in
+            </div>
+          </div>
+        )}
 
 
       <h1 className="text-3xl font-bold mb-6">WiFi Speed Dashboard</h1>
