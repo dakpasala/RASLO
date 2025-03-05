@@ -7,7 +7,7 @@ const { supabase } = require('./supabaseClient'); // Import your Supabase client
  * Features:
  *  - Convert location to Title Case (lowercase + uppercase first letters).
  *  - Convert timestamp to PST.
- *  - Convert bits per second to Mbits and MB per second (MB = Mbits / 8).
+ *  - Convert bits per second to Mbits and MB per second (MB = Mbits / 8), rounded to 3 decimals.
  */
 const processLogFile = async (jsonFilePath) => {
   try {
@@ -17,7 +17,6 @@ const processLogFile = async (jsonFilePath) => {
 
     // 1) Safely extract and normalize the location
     let rawLocation = jsonData.location || '';
-    // Convert to lowercase, then capitalize the first letter of each word
     let normalizedLocation = rawLocation
       .toLowerCase()
       .split(' ')
@@ -36,7 +35,7 @@ const processLogFile = async (jsonFilePath) => {
     // 3) Prepare the base metrics object
     let currentTest = {
       Region: normalizedLocation || null,
-      Timestamp: pstDateString,        // The PST timestamp
+      Timestamp: pstDateString,
       Post_Time_Seconds: 0,           // Default if not provided
       Download_Time_Seconds: 0,       // Default if not provided
       Post_Rate_Files_per_Sec: null,  // Not provided in JSON
@@ -47,23 +46,23 @@ const processLogFile = async (jsonFilePath) => {
       Download_Rate_MB_per_Sec: null,
     };
 
-    // 4) Extract upload bits/sec and convert to Mbits and MB
+    // 4) Extract upload bits/sec and convert to Mbits and MB (rounded to 3 decimals)
     if (jsonData.end && jsonData.end.sum_sent) {
       const uploadBps = jsonData.end.sum_sent.bits_per_second;
       if (typeof uploadBps === 'number') {
-        const uploadMbps = uploadBps / 1e6;
-        const uploadMBps = uploadMbps / 8; 
+        const uploadMbps = parseFloat((uploadBps / 1e6).toFixed(3)); // Round to 3 decimals
+        const uploadMBps = parseFloat((uploadMbps / 8).toFixed(3));  // Round to 3 decimals
         currentTest.Post_Rate_Mbits_per_Sec = uploadMbps;
         currentTest.Post_Rate_MB_per_Sec = uploadMBps;
       }
     }
 
-    // 5) Extract download bits/sec and convert to Mbits and MB
+    // 5) Extract download bits/sec and convert to Mbits and MB (rounded to 3 decimals)
     if (jsonData.end && jsonData.end.sum_received) {
       const downloadBps = jsonData.end.sum_received.bits_per_second;
       if (typeof downloadBps === 'number') {
-        const downloadMbps = downloadBps / 1e6;
-        const downloadMBps = downloadMbps / 8;
+        const downloadMbps = parseFloat((downloadBps / 1e6).toFixed(3)); // Round to 3 decimals
+        const downloadMBps = parseFloat((downloadMbps / 8).toFixed(3));  // Round to 3 decimals
         currentTest.Download_Rate_Mbits_per_Sec = downloadMbps;
         currentTest.Download_Rate_MB_per_Sec = downloadMBps;
       }
