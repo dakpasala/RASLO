@@ -3,78 +3,86 @@ const { supabase } = require('./supabaseClient'); // Import your Supabase client
 
 /**
  * Process the JSON log file and extract the important metrics.
- * From the JSON, we care about:
- *  - The test timestamp (from start.timestamp.time)
- *  - The location (from location)
- *  - The post rate (from end.sum_sent.bits_per_second)
- *  - The download rate (from end.sum_received.bits_per_second)
- *
- * We also set:
- *  - Post_Time_Seconds and Download_Time_Seconds to 0 if not found.
- *  - Files per second values to null (since they aren’t provided).
- *  - Convert bits per second to MB/sec and Mbits/sec.
+ * 
+ * Features:
+ *  - Convert location to Title Case (lowercase + uppercase first letters).
+ *  - Convert timestamp to PST.
+ *  - Convert bits per second to Mbits and MB per second (MB = Mbits / 8).
  */
 const processLogFile = async (jsonFilePath) => {
   try {
     // Read and parse the entire JSON file
-    const jsonData = JSON.parse(fs.readFileSync(jsonFilePath, 'utf8'));
+    const fileContent = fs.readFileSync(jsonFilePath, 'utf8');
+    const jsonData = JSON.parse(fileContent);
 
-    // Extract base metadata
-    const region = jsonData.location || null;
-    const timestamp = (jsonData.start &&
-                       jsonData.start.timestamp &&
-                       jsonData.start.timestamp.time) || null;
+    // 1) Safely extract and normalize the location
+    let rawLocation = jsonData.location || '';
+    // Convert to lowercase, then capitalize the first letter of each word
+    let normalizedLocation = rawLocation
+      .toLowerCase()
+      .split(' ')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
 
-    // Initialize our test object with default values
+    // 2) Convert the timestamp to PST
+    let timeStamp = jsonData?.start?.timestamp?.time || null;
+    let pstDateString = null;
+    if (timeStamp) {
+      const date = new Date(timeStamp);
+      // Convert to Pacific Standard Time
+      pstDateString = date.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
+    }
+
+    // 3) Prepare the base metrics object
     let currentTest = {
-      Region: region,
-      Timestamp: timestamp,
-      // Default times (not provided in JSON)
-      Post_Time_Seconds: 0,
-      Download_Time_Seconds: 0,
-      // File rate values are not provided in JSON so default to null
-      Post_Rate_Files_per_Sec: null,
-      Download_Rate_Files_per_Sec: null,
-      // Calculate rates from bits_per_second if available
+      Region: normalizedLocation || null,
+      Timestamp: pstDateString,        // The PST timestamp
+      Post_Time_Seconds: 0,           // Default if not provided
+      Download_Time_Seconds: 0,       // Default if not provided
+      Post_Rate_Files_per_Sec: null,  // Not provided in JSON
+      Download_Rate_Files_per_Sec: null, // Not provided in JSON
       Post_Rate_Mbits_per_Sec: null,
       Post_Rate_MB_per_Sec: null,
       Download_Rate_Mbits_per_Sec: null,
       Download_Rate_MB_per_Sec: null,
     };
 
-    // Process sum_sent as the post rate (if available)
+    // 4) Extract upload bits/sec and convert to Mbits and MB
     if (jsonData.end && jsonData.end.sum_sent) {
-      const postBits = jsonData.end.sum_sent.bits_per_second;
-      // Convert bits per second to Mbits per second
-      currentTest.Post_Rate_Mbits_per_Sec = postBits ? postBits / 1e6 : null;
-      // MB/sec is Mbits/sec divided by 8
-      currentTest.Post_Rate_MB_per_Sec = postBits ? (postBits / 1e6) / 8 : null;
+      const uploadBps = jsonData.end.sum_sent.bits_per_second;
+      if (typeof uploadBps === 'number') {
+        const uploadMbps = uploadBps / 1e6;
+        const uploadMBps = uploadMbps / 8; 
+        currentTest.Post_Rate_Mbits_per_Sec = uploadMbps;
+        currentTest.Post_Rate_MB_per_Sec = uploadMBps;
+      }
     }
 
-    // Process sum_received as the download rate (if available)
+    // 5) Extract download bits/sec and convert to Mbits and MB
     if (jsonData.end && jsonData.end.sum_received) {
-      const downloadBits = jsonData.end.sum_received.bits_per_second;
-      currentTest.Download_Rate_Mbits_per_Sec = downloadBits ? downloadBits / 1e6 : null;
-      currentTest.Download_Rate_MB_per_Sec = downloadBits ? (downloadBits / 1e6) / 8 : null;
+      const downloadBps = jsonData.end.sum_received.bits_per_second;
+      if (typeof downloadBps === 'number') {
+        const downloadMbps = downloadBps / 1e6;
+        const downloadMBps = downloadMbps / 8;
+        currentTest.Download_Rate_Mbits_per_Sec = downloadMbps;
+        currentTest.Download_Rate_MB_per_Sec = downloadMBps;
+      }
     }
 
-    // Mimic the original processLog.js logic:
-    // Check if the required metrics are present.
-    // (Here, Post_Time and Download_Time default to 0 and file rates are null,
-    // so we force the condition to be true by using "|| true".)
+    // Mimic the original logic for checking required metrics
     const allMetricsPresent = [
       'Post_Time_Seconds',
       'Download_Time_Seconds',
       'Post_Rate_Files_per_Sec',
       'Download_Rate_Files_per_Sec',
-    ].every(key => currentTest[key] !== null);
+    ].every((key) => currentTest[key] !== null);
 
-    // Output the processed stats (wrapped in an array for consistency)
+    // Output the processed stats for debugging
     console.log('Processed Stats:');
     console.log(JSON.stringify([currentTest], null, 2));
 
-    // Insert the processed data into Supabase if metrics are available
-    if (allMetricsPresent || true) { // using "|| true" to ensure insertion even if file rates are null
+    // Insert into Supabase (force insertion with "|| true")
+    if (allMetricsPresent || true) {
       const { data, error } = await supabase.from('speeds').insert([currentTest]);
       if (error) {
         console.error('Error inserting data into Supabase:', error);
@@ -89,7 +97,10 @@ const processLogFile = async (jsonFilePath) => {
   }
 };
 
+// Allow running from CLI (node processLogFile.js <jsonFilePath>)
 const jsonFilePath = process.argv[2];
-processLogFile(jsonFilePath);
+if (jsonFilePath) {
+  processLogFile(jsonFilePath);
+}
 
 module.exports = processLogFile;

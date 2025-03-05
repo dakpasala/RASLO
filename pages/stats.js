@@ -125,11 +125,12 @@ export default function StatsPage({ locations, statsByRegion }) {
   };
 
 
-  // Pre-generated color palette using golden ratio for even distribution
+  // Define distinctColors only once, outside your component, so it doesn't re-run on each render
   const distinctColors = (() => {
     const colors = [];
     const goldenRatio = 0.618033988749895;
-    let hue = Math.random();
+    // Start with a fixed hue seed (instead of Math.random)
+    let hue = 0.5; 
 
     // Generate 30 distinct colors
     for (let i = 0; i < 30; i++) {
@@ -137,58 +138,47 @@ export default function StatsPage({ locations, statsByRegion }) {
       
       // Convert HSL to RGB to HEX
       const h = hue * 360;
-      const s = 0.65 + Math.random() * 0.15; // Saturation between 65-80%
-      const l = 0.45 + Math.random() * 0.15; // Lightness between 45-60%
-      
-      // Convert HSL to RGB
+      // Fixed saturation and lightness so we don't get random changes
+      const s = 0.70;
+      const l = 0.55;
+
       const c = (1 - Math.abs(2 * l - 1)) * s;
       const x = c * (1 - Math.abs((h / 60) % 2 - 1));
-      const m = l - c/2;
+      const m = l - c / 2;
       
       let r, g, b;
-      if (h < 60) {
-        [r, g, b] = [c, x, 0];
-      } else if (h < 120) {
-        [r, g, b] = [x, c, 0];
-      } else if (h < 180) {
-        [r, g, b] = [0, c, x];
-      } else if (h < 240) {
-        [r, g, b] = [0, x, c];
-      } else if (h < 300) {
-        [r, g, b] = [x, 0, c];
-      } else {
-        [r, g, b] = [c, 0, x];
-      }
+      if (h < 60) [r, g, b] = [c, x, 0];
+      else if (h < 120) [r, g, b] = [x, c, 0];
+      else if (h < 180) [r, g, b] = [0, c, x];
+      else if (h < 240) [r, g, b] = [0, x, c];
+      else if (h < 300) [r, g, b] = [x, 0, c];
+      else [r, g, b] = [c, 0, x];
       
-      // Convert to hex
       const toHex = (n) => {
         const hex = Math.round((n + m) * 255).toString(16);
         return hex.length === 1 ? '0' + hex : hex;
       };
       
       colors.push(`#${toHex(r)}${toHex(g)}${toHex(b)}`);
-    } 
+    }
 
     return colors;
   })();
 
   function getDistinctColor(region) {
-    // Improved hash function using djb2 algorithm
+    // Hash the region name so each region consistently maps to the same index
     let hash = 5381;
     for (let i = 0; i < region.length; i++) {
       hash = ((hash << 5) + hash) + region.charCodeAt(i);
-      hash = hash & hash; // Convert to 32-bit integer
+      hash &= hash; // convert to 32-bit integer
     }
-
-    // Add some variance to prevent adjacent regions from getting similar colors
     const prime = 31;
     hash = (hash * prime) & hash;
 
-    // Map the hash to our color array
+    // Pick a color from our fixed palette
     const index = Math.abs(hash) % distinctColors.length;
     return distinctColors[index];
   }
-
 
   // Handle log file upload and processing
   const handleFileUpload = async (event) => {
