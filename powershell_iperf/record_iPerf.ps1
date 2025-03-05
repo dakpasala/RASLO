@@ -72,13 +72,65 @@ $resultsASJson | Add-Member -NotePropertyName "location" -NotePropertyValue $loc
 
 if($resultsASJson.error){
     Write-Host "There was an issue with the iPerf results" -ForegroundColor Red
+    return
 }
 else{
     Write-Host "No error reported from iPerf. Now trying to upload iPerf results"
 }
 
-$resultsAsJSON | ConvertTo-Json | Set-Content -Path .\saveHereTest.log
+$resultsAsJSON | ConvertTo-Json | Set-Content -Path .\iPerfJSON.json
 
 $url = "https://raslo.vercel.app/api/upload-log"
-$response = Invoke-RestMethod -Method 'Post' -Uri $url #-Body ($resultsASJson | ConvertTo-Json)
+# Get the current directory (where the script is running)
+$currentDir = Get-Location
+
+# Define the file path relative to the current directory
+$jsonFile = Join-Path $currentDir "iPerfJSON.json"
+
+# Check if the file exists
+if (-not (Test-Path $jsonFile)) {
+    Write-Host "File not found: $jsonFile"
+    exit 1
+}
+
+
+# Create a boundary for the multipart/form-data
+$boundary = [System.Guid]::NewGuid().ToString()
+
+# Read the file content
+$fileBytes = [System.IO.File]::ReadAllBytes($jsonFile)
+
+# Convert bytes to a string (using UTF8 encoding)
+$fileContent = [System.Text.Encoding]::UTF8.GetString($fileBytes)
+
+$bodyLines = @(
+    "--$boundary",
+    "Content-Disposition: form-data; name=`"file`"; filename=`"$([System.IO.Path]::GetFileName($filePath))`"",
+    "Content-Type: application/json",
+    "",
+    $fileContent,
+    "--$boundary--"
+)
+
+# Join the body with CRLF
+$body = $bodyLines -join "`r`n"
+
+# Set the content type to multipart/form-data and include the boundary
+$headers = @{
+    "Content-Type" = "multipart/form-data; boundary=$boundary"
+}
+
+# Perform the API request using Invoke-WebRequest
+$response = Invoke-WebRequest -Uri $url -Method Post -Body $body -Headers $headers
+
+Write-Output $($response.Content)
+<#
+$url = "https://raslo.vercel.app/api/upload-log"
+$jsonFile = Get-Item -Path .\iPerfJSON.json
+Write-Host $jsonFile
+$postBody = @{
+    file = $jsonFile
+}
+$response = Invoke-WebRequest -Method Post -Uri $url -Body $postBody #-Body ($resultsASJson | ConvertTo-Json)
 Write-Output $($response.message)
+#>
