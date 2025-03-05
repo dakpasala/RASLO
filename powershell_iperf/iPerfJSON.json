@@ -1,0 +1,111 @@
+{
+    "start":  {
+                  "connected":  [
+                                    "@{socket=5; local_host=10.0.2.15; local_port=50773; remote_host=183.178.0.302; remote_port=6802}"
+                                ],
+                  "version":  "iperf 3.17.1",
+                  "system_info":  "CYGWN_NT-10.0-19045 ",
+                  "timestamp":  {
+                                    "time":  "Wed, 05 Mar 2025 19:26:29 GMT",
+                                    "timesecs":  1741202789
+                                },
+                  "connecting_to":  {
+                                        "host":  "183.178.0.302",
+                                        "port":  6802
+                                    },
+                  "cookie":  "bliag5ugt7nsvma73zo4gpct4z2wehnkg",
+                  "tcp_mss_default":  1460,
+                  "target_bitrate":  0,
+                  "fq_rate":  0,
+                  "sock_bufsize":  0,
+                  "sndbuf_actual":  65536,
+                  "rcvbuf_actual":  65536,
+                  "test_start":  {
+                                     "protocol":  "TCP",
+                                     "num_streams":  1,
+                                     "blksize":  131072,
+                                     "omit":  0,
+                                     "duration":  10,
+                                     "bytes":  0,
+                                     "blocks":  0,
+                                     "reverse":  0,
+                                     "tos":  0,
+                                     "target_bitrate":  0,
+                                     "bidir":  0,
+                                     "fqrate":  0,
+                                     "interval":  1
+                                 }
+              },
+    "intervals":  [
+                      {
+                          "streams":  "",
+                          "sum":  "@{start=0; end=1.011726; seconds=1.0117260217666626; bytes=14680064; bits_per_second=116079362.86439182; omitted=False; sender=True}"
+                      },
+                      {
+                          "streams":  "",
+                          "sum":  "@{start=1.011726; end=2.130568; seconds=1.1188420057296753; bytes=23068672; bits_per_second=164946770.90680236; omitted=False; sender=True}"
+                      },
+                      {
+                          "streams":  "",
+                          "sum":  "@{start=2.130568; end=3.013472; seconds=0.88290399312973022; bytes=16777216; bits_per_second=152018485.6387648; omitted=False; sender=True}"
+                      },
+                      {
+                          "streams":  "",
+                          "sum":  "@{start=3.013472; end=4.021924; seconds=1.00845205783844; bytes=21364736; bits_per_second=169485387.70038593; omitted=False; sender=True}"
+                      },
+                      {
+                          "streams":  "",
+                          "sum":  "@{start=4.021924; end=5.003249; seconds=0.98132497072219849; bytes=21757952; bits_per_second=177376120.23863944; omitted=False; sender=True}"
+                      },
+                      {
+                          "streams":  "",
+                          "sum":  "@{start=5.003249; end=6.018505; seconds=1.01525604724884; bytes=19791872; bits_per_second=155955708.3447659; omitted=False; sender=True}"
+                      },
+                      {
+                          "streams":  "",
+                          "sum":  "@{start=6.018505; end=7.020335; seconds=1.001829981803894; bytes=12320768; bits_per_second=98386099.228655443; omitted=False; sender=True}"
+                      },
+                      {
+                          "streams":  "",
+                          "sum":  "@{start=7.020335; end=8.042412; seconds=1.0220769643783569; bytes=14417920; bits_per_second=112851931.91899557; omitted=False; sender=True}"
+                      },
+                      {
+                          "streams":  "",
+                          "sum":  "@{start=8.042412; end=9.008498; seconds=0.966085970401764; bytes=12189696; bits_per_second=100940879.99171089; omitted=False; sender=True}"
+                      },
+                      {
+                          "streams":  "",
+                          "sum":  "@{start=9.008498; end=10.021573; seconds=1.0130749940872192; bytes=14680064; bits_per_second=115924795.97802523; omitted=False; sender=True}"
+                      }
+                  ],
+    "end":  {
+                "streams":  [
+                                "@{sender=; receiver=}"
+                            ],
+                "sum_sent":  {
+                                 "start":  0,
+                                 "end":  10.021573,
+                                 "seconds":  10.021573,
+                                 "bytes":  171048960,
+                                 "bits_per_second":  136544600.33370012,
+                                 "sender":  true
+                             },
+                "sum_received":  {
+                                     "start":  0,
+                                     "end":  10.059896,
+                                     "seconds":  10.059896,
+                                     "bytes":  170917888,
+                                     "bits_per_second":  135920202.75358713,
+                                     "sender":  true
+                                 },
+                "cpu_utilization_percent":  {
+                                                "host_total":  1.0933187292455804,
+                                                "host_user":  0.3081170964237544,
+                                                "host_system":  0.78520163282182576,
+                                                "remote_total":  3.7276275251197366,
+                                                "remote_user":  1.2425425083732455,
+                                                "remote_system":  2.4850850167464911
+                                            }
+            },
+    "location":  "arroyO gRande"
+}
