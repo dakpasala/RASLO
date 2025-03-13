@@ -6,33 +6,14 @@
     [Parameter(
         Mandatory)]
     [string]$locationName,
-    [string]$iPerfPath,
-    [string]$saveResHere
+    [string]$iPerfPath
 )
+
 $captureResults = ""
-$keyExists = $PSBoundParameters.ContainsKey("saveResHere")
 $portExists = $PSBoundParameters.ContainsKey("serverPort")
 $iperfExeExists = $PSBoundParameters.ContainsKey("iPerfPath")
 
-#check if the location given is valid; this is case--insensitive
-$validLocations = @("Raslo", "Sierra Vista", "Selma Carlson", "Twin Cities",
-                    "French", "Arroyo Grande")
-if($locationName -ne "Raslo" -and
-    $locationName -ne "Sierra Vista" -and
-    $locationName -ne "Selma Carlson" -and
-    $locationName -ne "Twin Cities" -and
-    $locationName -ne "French" -and
-    $locationName -ne "Arroyo Grande"){
-    
-    Write-Host "The location name '$locationName' is invalid"  -ForegroundColor Red
-    Write-Host "Valid location names are: $($validLocations -join ', ')" -ForegroundColor Red
-    return
-}
-#if no file given to save results create a file path
-if(!($keyExists)){
-    #Write-Output "parameter does not exist"
-    $saveResHere = "iPerfResults.log"
-}
+$saveResHere = Join-Path (Get-Location).Path "iPerfJSON.json"
 
 #path to the iperf3 executable
 $iPerfExePath = "C:\Users\vboxuser\Downloads\iperf3.17.1_64\iperf3.17.1_64\iperf3.exe"
@@ -40,15 +21,16 @@ if($iperfExeExists){
     $iPerfExePath = $iPerfPath
 }
 else{
-    #$iPerfExePath = "iperf3.exe"
+    $iPerfExePath = "iperf3.exe"
 }
 
 #check if the path exists
 if(!(Test-Path -LiteralPath $iPerfExePath -PathType leaf)){
     #stop the script of the path doesn't exist
-    Write-Host "The given file path does not exists: $iPerfExePath" -ForegroundColor Red
-    return
+    Write-Host "The given iPerf file path does not exist: $iPerfExePath" -ForegroundColor Red
+    return 1
 }
+
 
 
 #exectue the iperf file as the client and talk to the server with
@@ -62,10 +44,6 @@ else{
 
 #Note that the client is the sender (bitrate is upload speeds) and
 #then receiver is the server (bitrate is download speeds)
-#Write-Output $captureResults
-
-#note that this will overwrite the conent of the file
-Set-Content -Path $saveResHere -Value $captureResults
 
 $resultsAsJSON = $captureResults | ConvertFrom-Json
 $resultsASJson | Add-Member -NotePropertyName "location" -NotePropertyValue $locationName
@@ -75,30 +53,18 @@ if($resultsASJson.error){
     return
 }
 else{
-    Write-Host "No error reported from iPerf. Now trying to upload iPerf results"
+    Write-Host "No error reported from iPerf. Now trying to upload iPerf results" -ForegroundColor Green
 }
 
-$resultsAsJSON | ConvertTo-Json | Set-Content -Path .\iPerfJSON.json
-
+#note that this will overwrite the conent of the file
+$resultsAsJSON | ConvertTo-Json | Set-Content -Path $saveResHere
 $url = "https://raslo.vercel.app/api/upload-log"
-# Get the current directory (where the script is running)
-$currentDir = Get-Location
-
-# Define the file path relative to the current directory
-$jsonFile = Join-Path $currentDir "iPerfJSON.json"
-
-# Check if the file exists
-if (-not (Test-Path $jsonFile)) {
-    Write-Host "File not found: $jsonFile"
-    exit 1
-}
-
 
 # Create a boundary for the multipart/form-data
 $boundary = [System.Guid]::NewGuid().ToString()
 
 # Read the file content
-$fileBytes = [System.IO.File]::ReadAllBytes($jsonFile)
+$fileBytes = [System.IO.File]::ReadAllBytes($saveResHere)
 
 # Convert bytes to a string (using UTF8 encoding)
 $fileContent = [System.Text.Encoding]::UTF8.GetString($fileBytes)
@@ -121,16 +87,14 @@ $headers = @{
 }
 
 # Perform the API request using Invoke-WebRequest
-$response = Invoke-WebRequest -Uri $url -Method Post -Body $body -Headers $headers
+try {
+    $response = Invoke-WebRequest -Uri $url -Method Post -Body $body -Headers $headers
 
-Write-Output $($response.Content)
-<#
-$url = "https://raslo.vercel.app/api/upload-log"
-$jsonFile = Get-Item -Path .\iPerfJSON.json
-Write-Host $jsonFile
-$postBody = @{
-    file = $jsonFile
+    Write-Host -ForegroundColor green $($response.Content)
 }
-$response = Invoke-WebRequest -Method Post -Uri $url -Body $postBody #-Body ($resultsASJson | ConvertTo-Json)
-Write-Output $($response.message)
-#>
+catch {
+    Write-Host "If the following error mentions a FUNCTION_INVOCATION_TIMEOUT it can probably be disregarded. If any 
+    other message is provide it could mean that the script failed to connect to the backend or the
+    data couldn't be processed" -ForegroundColor Yellow
+    Write-Host -ForegroundColor red $_
+}
