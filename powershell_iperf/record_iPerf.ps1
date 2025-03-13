@@ -16,7 +16,6 @@ $iperfExeExists = $PSBoundParameters.ContainsKey("iPerfPath")
 $saveResHere = Join-Path (Get-Location).Path "iPerfJSON.json"
 
 #path to the iperf3 executable
-$iPerfExePath = "C:\Users\vboxuser\Downloads\iperf3.17.1_64\iperf3.17.1_64\iperf3.exe"
 if($iperfExeExists){
     $iPerfExePath = $iPerfPath
 }
