@@ -21,7 +21,7 @@ if($iperfExeExists){
     $iPerfExePath = $iPerfPath
 }
 else{
-    $iPerfExePath = "iperf3.exe"
+    $iPerfExePath = Join-Path (Get-Location).Path "iperf3.exe"
 }
 
 #check if the path exists
